@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+    android:id="@+id/bottom_nav_dashboard"
+    android:title="Anasayfa"
+    android:icon="@drawable/ic_icons8_home"
+    />
+
+
+    <item
+        android:id="@+id/bottom_nav_auctions"
+        android:title="Ürün Ekle"
+        android:icon="@drawable/ic_add"
+        />
+
+    <item
+        android:id="@+id/bottom_nav_sell"
+        android:title="Arttır"
+        android:icon="@drawable/ic_auction"
+        />
+    <item
+        android:id="@+id/bottom_nav_notification"
+        android:title="Bildirimler"
+        android:icon="@drawable/ic_bell"
+        />
+    <item
+        android:id="@+id/bottom_nav_profile"
+        android:title="Hesabım"
+        android:icon="@drawable/ic_icons8_person_24"
+        />
+
+</menu>
