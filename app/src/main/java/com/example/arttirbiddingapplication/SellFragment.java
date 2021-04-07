@@ -1,5 +1,6 @@
 package com.example.arttirbiddingapplication;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -8,12 +9,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -45,7 +49,8 @@ import java.util.ArrayList;
 public class SellFragment extends Fragment {
 
     private static final String TAG = "SellFragment";
-
+    private EditText title,startprice,description;
+    private Button savebtn;
     private FirebaseAuth fAuth;
     private FirebaseUser fUser;
     private FirebaseFirestore firebaseFirestore;
@@ -55,7 +60,7 @@ public class SellFragment extends Fragment {
     private ArrayList<String> mImageUrls=new ArrayList<>();
     private RecyclerView recyclerView;
 
-    private String[] arraySpinner = new String[]{"Elektronik","Ev Eşyaları","Oyun","Araç","Araç parçaları","Bahçe ve Hırdavat","Spor ve Outdoor","Moda ve Aksesuar","Bebek ve Çocuk","Film,Kitap ve Müzik","Diğer"};
+    private String[] arraySpinner = new String[]{"Kategori Seçiniz","Elektronik","Ev Eşyaları","Oyun","Araç","Araç parçaları","Bahçe ve Hırdavat","Spor ve Outdoor","Moda ve Aksesuar","Bebek ve Çocuk","Film,Kitap ve Müzik","Diğer"};
     private Spinner s1;
     private String category="";
     private ImageView imageView;
@@ -73,6 +78,11 @@ public class SellFragment extends Fragment {
         storageReference = storage.getReference();
 
         recyclerView=view.findViewById(R.id.recyclerView);
+
+        title=view.findViewById(R.id.txt_Title);
+        startprice=view.findViewById(R.id.txt_startingPrice);
+        description = view.findViewById(R.id.txt_description);
+        savebtn=view.findViewById(R.id.savebuttonsell);
 
 
 
@@ -102,9 +112,41 @@ public class SellFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         s1.setAdapter(adapter);
 
+        savebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkInput();
+            }
+        });
+
 
 
         return view;
+    }
+
+    private void checkInput(){
+       if(!category.equals("Kategori Seçiniz")){
+         if(!TextUtils.isEmpty(title.getText())){
+            if(!TextUtils.isEmpty(startprice.getText())){
+                if(!TextUtils.isEmpty(description.getText())){
+
+
+                }else{
+                    description.setError("Açıklama kısmını boş bırakmayın !");
+                }
+            }else{
+                startprice.setError("Başlangıç Fiyatını Boş Bırakmayın !");
+            }
+        }else{
+            title.setError("Başlık Kısmını Boş Bırakmayın!");
+        }
+       }else{
+          // Toast.makeText(getContext(),"Kategori Seçiniz!",Toast.LENGTH_LONG).show();
+           TextView error = (TextView)s1.getSelectedView();
+           error.setError("Kategori Seçiniz !");
+
+       }
+
     }
 
     private void getImages(){
