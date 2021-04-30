@@ -14,7 +14,7 @@
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:fillViewport="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -24,14 +24,14 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="300dp">
+                android:paddingBottom="400dp">
 
                 <EditText
                     android:id="@+id/txt_description"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="24dp"
                     android:background="@drawable/ic_input_shape"
                     android:ems="10"
@@ -51,15 +51,15 @@
 
                 <Button
                     android:id="@+id/savebuttonsell"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="161dp"
-                    android:layout_marginTop="64dp"
-                    android:layout_marginEnd="162dp"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="68dp"
+                    android:layout_marginEnd="24dp"
                     android:background="@drawable/ic_input_shape_button"
                     android:text="Yayınla"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_bias="0.497"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_description" />
 
@@ -76,6 +76,18 @@
                     app:layout_constraintTop_toBottomOf="@+id/txt_startingPrice" />
 
                 <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Bir artış miktarı belirle, alıcı sabit fiyat ile arttırsın"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_increasingRate" />
+
+                <TextView
                     android:id="@+id/textView13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -90,16 +102,16 @@
                 <EditText
                     android:id="@+id/txt_startingPrice"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="24dp"
                     android:background="@drawable/ic_input_shape"
+                    android:digits="0123456789"
                     android:drawableLeft="@drawable/ic_icons8_edit__1_"
                     android:drawablePadding="15dp"
                     android:ems="10"
-                    android:hint="Başlangıç Fiyatı"
-                    android:digits="0123456789"
+                    android:hint="Başlangıç Fiyatı (TL)"
                     android:inputType="number"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
@@ -110,6 +122,31 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+                <EditText
+                    android:id="@+id/txt_increasingRate"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/ic_input_shape"
+                    android:digits="0123456789"
+                    android:drawableLeft="@drawable/ic_icons8_edit__1_"
+                    android:drawablePadding="15dp"
+                    android:ems="10"
+                    android:hint="Artış Miktarı (TL)"
+                    android:inputType="number"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#888282"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
                 <TextView
                     android:id="@+id/textView10"
@@ -126,7 +163,7 @@
                 <EditText
                     android:id="@+id/txt_Title"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="24dp"
@@ -134,6 +171,7 @@
                     android:drawableLeft="@drawable/ic_icons8_edit__1_"
                     android:drawablePadding="15dp"
                     android:ems="10"
+                    android:maxLength="40"
                     android:hint="Başlık"
                     android:inputType="textPersonName"
                     android:paddingLeft="25dp"
@@ -161,18 +199,19 @@
                 <Spinner
                     android:id="@+id/categorySpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="32dp"
                     android:layout_marginEnd="24dp"
                     android:background="@drawable/spinner_styling"
                     android:paddingStart="55dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <CheckBox
-                    android:id="@+id/checkBox"
+                    android:id="@+id/notUsedCheck"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Evet"
@@ -181,21 +220,20 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/textView7"
-                    app:layout_constraintTop_toTopOf="@+id/textView7"
-                    app:layout_constraintVertical_bias="0.416" />
+                    app:layout_constraintTop_toTopOf="@+id/textView7" />
 
                 <TextView
                     android:id="@+id/textView7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:text="Hiç kullanılmamış"
                     android:textColor="#FFFFFF"
                     android:textSize="15sp"
-                    app:layout_constraintEnd_toStartOf="@+id/checkBox"
+                    app:layout_constraintEnd_toStartOf="@+id/notUsedCheck"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView11" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
                 <com.addisonelliott.segmentedbutton.SegmentedButtonGroup
                     android:id="@+id/buttonGroup_lordOfTheRings"
@@ -203,7 +241,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="32dp"
                     android:layout_marginEnd="24dp"
                     android:background="@color/white"
                     android:elevation="2dp"
@@ -212,8 +250,9 @@
                     app:divider="@color/black"
                     app:dividerPadding="10dp"
                     app:dividerWidth="1dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView11"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7"
                     app:position="0"
                     app:radius="30dp"
                     app:ripple="true"
@@ -276,9 +315,21 @@
             android:layout_marginTop="16dp"
             android:text="Ürün Ekleme"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/addImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_photo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.971"
+            app:layout_constraintStart_toEndOf="@+id/textView8"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

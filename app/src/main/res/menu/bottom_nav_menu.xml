@@ -11,20 +11,20 @@
 
 
     <item
-        android:id="@+id/bottom_nav_auctions"
+        android:id="@+id/bottom_nav_sell"
         android:title="Ürün Ekle"
         android:icon="@drawable/ic_add"
         />
 
     <item
-        android:id="@+id/bottom_nav_sell"
+        android:id="@+id/bottom_nav_auctions"
         android:title="Arttır"
         android:icon="@drawable/ic_auction"
         />
     <item
         android:id="@+id/bottom_nav_notification"
-        android:title="Bildirimler"
-        android:icon="@drawable/ic_bell"
+        android:title="Mesajlar"
+        android:icon="@drawable/mail"
         />
     <item
         android:id="@+id/bottom_nav_profile"

@@ -9,16 +9,17 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+
+import java.net.URL;
 import java.util.ArrayList;
 
 
-public class RecyclerItemViewAdaptor extends RecyclerView.Adapter<RecyclerItemViewAdaptor.ViewHolder> {
+public class RecyclerBiddingItemAdapter extends RecyclerView.Adapter<RecyclerBiddingItemAdapter.ViewHolder> {
 
-    public static final String TAG="RecyclerItemViewAdapter";
-    private ArrayList<Uri> mImageUrls=new ArrayList<>();
+    private ArrayList<String> mImageUrls=new ArrayList<>();
     private Context context;
 
-    public RecyclerItemViewAdaptor(Context context,ArrayList<Uri> mImageUrls) {
+    public RecyclerBiddingItemAdapter(Context context,ArrayList<String> mImageUrls) {
         this.mImageUrls = mImageUrls;
         this.context = context;
     }
@@ -27,7 +28,7 @@ public class RecyclerItemViewAdaptor extends RecyclerView.Adapter<RecyclerItemVi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_biddingitem,parent,false);
         return new ViewHolder(view);
     }
 
@@ -45,13 +46,9 @@ public class RecyclerItemViewAdaptor extends RecyclerView.Adapter<RecyclerItemVi
             @Override
             public void onClick(View v) {
 
-
-
             }
         });
-
     }
-
 
 
     @Override
@@ -59,13 +56,11 @@ public class RecyclerItemViewAdaptor extends RecyclerView.Adapter<RecyclerItemVi
         return mImageUrls.size();
     }
 
-
-
     public class ViewHolder extends RecyclerView.ViewHolder{
-            ImageView itemImage;
+        ImageView itemImage;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemImage=itemView.findViewById(R.id.itemImage);
+            itemImage=itemView.findViewById(R.id.biddingItemImage);
 
         }
     }

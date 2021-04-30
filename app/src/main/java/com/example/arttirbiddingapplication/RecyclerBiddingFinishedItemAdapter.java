@@ -1,38 +1,39 @@
 package com.example.arttirbiddingapplication;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
+public class RecyclerBiddingFinishedItemAdapter extends RecyclerView.Adapter<RecyclerBiddingFinishedItemAdapter.ViewHolder>{
 
-public class RecyclerItemViewAdaptor extends RecyclerView.Adapter<RecyclerItemViewAdaptor.ViewHolder> {
 
-    public static final String TAG="RecyclerItemViewAdapter";
-    private ArrayList<Uri> mImageUrls=new ArrayList<>();
+    private ArrayList<String> mImageUrls=new ArrayList<>();
     private Context context;
 
-    public RecyclerItemViewAdaptor(Context context,ArrayList<Uri> mImageUrls) {
+    public RecyclerBiddingFinishedItemAdapter(Context context,ArrayList<String> mImageUrls) {
         this.mImageUrls = mImageUrls;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerBiddingFinishedItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem,parent,false);
-        return new ViewHolder(view);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_biddingfinished,parent,false);
+        return new RecyclerBiddingFinishedItemAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerBiddingFinishedItemAdapter.ViewHolder holder, int position) {
 
 
         Glide.with(context)
@@ -45,13 +46,9 @@ public class RecyclerItemViewAdaptor extends RecyclerView.Adapter<RecyclerItemVi
             @Override
             public void onClick(View v) {
 
-
-
             }
         });
-
     }
-
 
 
     @Override
@@ -59,17 +56,12 @@ public class RecyclerItemViewAdaptor extends RecyclerView.Adapter<RecyclerItemVi
         return mImageUrls.size();
     }
 
-
-
     public class ViewHolder extends RecyclerView.ViewHolder{
-            ImageView itemImage;
+        ImageView itemImage;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemImage=itemView.findViewById(R.id.itemImage);
+            itemImage=itemView.findViewById(R.id.finishedbiddingItemImage);
 
         }
     }
-
-
-
 }

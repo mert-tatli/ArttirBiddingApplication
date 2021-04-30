@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginTop="5dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="385dp"
+        android:layout_height="240dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="5dp"
+        app:cardBackgroundColor="#b71c1c"
+        android:layout_centerInParent="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/biddingTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Yamaha R1 1200 çok iyi durumdaaaaaaaaaa"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                >
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/biddingCurrentPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="145dp"
+                android:layout_toEndOf="@+id/cardInsideImage"
+                android:gravity="center"
+                android:text="Son Arttırma: 55.000 TL"
+                android:textColor="@color/white"
+                android:textSize="15sp"></TextView>
+
+            <TextView
+                android:id="@+id/bidderId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="110dp"
+                android:layout_toEndOf="@+id/cardInsideImage"
+                android:gravity="center"
+                android:text="Arttıran Kişi: Ahmet Beyoğlu"
+                android:textColor="@color/white"
+                android:textSize="15sp"></TextView>
+
+
+            <TextView
+                android:id="@+id/currentUserLastBid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="75dp"
+                android:layout_toEndOf="@+id/cardInsideImage"
+                android:gravity="center"
+                android:text="Son Verdiğin Teklif: 53.000 TL"
+                android:textColor="@color/white"
+                android:textSize="15sp"></TextView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardInsideImage"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="5dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+
+                >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/finishedbiddingItemImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/iconfinder"
+                    android:scaleType="fitXY"
+
+                    >
+                </androidx.appcompat.widget.AppCompatImageView>
+
+            </androidx.cardview.widget.CardView>
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

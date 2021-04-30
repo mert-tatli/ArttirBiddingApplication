@@ -1,25 +1,20 @@
 package com.example.arttirbiddingapplication;
 
-
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
@@ -35,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DashboardFragment()).commit();
         fAuth=FirebaseAuth.getInstance();
         fUser=FirebaseAuth.getInstance().getCurrentUser();
-
         firebaseFirestore= FirebaseFirestore.getInstance();
 
     }
@@ -49,13 +43,42 @@ public class MainActivity extends AppCompatActivity {
                        fragment = new DashboardFragment();
                        break;
                    case R.id.bottom_nav_sell:
-                       fragment = new SellFragment();
+                       if (fUser!=null)
+                       {
+                           fragment = new SellFragment();
+                       }
+                       else {
+                           Intent register=new Intent(MainActivity.this,RegisterActivity.class);
+                           startActivity(register);
+                           finish();
+                           return false;
+                       }
                        break;
                    case R.id.bottom_nav_auctions:
-                       fragment = new MyAuctionsFragment();
+                       if (fUser!=null)
+                       {
+                           fragment = new MyAuctionsFragment();
+                       }
+                       else {
+                           Intent register=new Intent(MainActivity.this,RegisterActivity.class);
+                           startActivity(register);
+                           finish();
+                           return false;
+                       }
                        break;
                    case R.id.bottom_nav_notification:
-                       fragment = new NotificationFragment();
+                       if (fUser!=null)
+                       {
+
+                       }
+                       else {
+                           Intent register=new Intent(MainActivity.this,RegisterActivity.class);
+                           startActivity(register);
+                           finish();
+                           return false;
+
+
+                       }
                        break;
                    case R.id.bottom_nav_profile:
                        if (fUser!=null)
