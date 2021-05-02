@@ -8,6 +8,10 @@ public class Product {
     private ArrayList<String> pictures;
     private boolean condition;
 
+    public Product(){
+
+    }
+
     public Product(String productId,String category,String title,String startingPrice, String increasingRate, boolean condition, String daysOfAuction, String details, ArrayList<String> pictures,String sellerId) {
        this.sellerId=sellerId;
         this.productId=productId;
@@ -98,5 +102,21 @@ public class Product {
 
     public void setPictures(ArrayList<String> pictures) {
         this.pictures = pictures;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "title='" + title + '\'' +
+                ", category='" + category + '\'' +
+                ", startingPrice='" + startingPrice + '\'' +
+                ", increasingRate='" + increasingRate + '\'' +
+                ", daysOfAuction='" + daysOfAuction + '\'' +
+                ", details='" + details + '\'' +
+                ", productId='" + productId + '\'' +
+                ", sellerId='" + sellerId + '\'' +
+                ", pictures=" + pictures +
+                ", condition=" + condition +
+                '}';
     }
 }
