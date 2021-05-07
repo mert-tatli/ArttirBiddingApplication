@@ -42,6 +42,10 @@ import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import java.util.ArrayList;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -162,8 +166,8 @@ public class SellFragment extends Fragment {
                                 progressDialog.show();
 
                                 uploadImages();
-
-                                Product newproduct=new Product(productId,category,title.getText().toString(),startprice.getText().toString(),increasingRate.getText().toString(),notusedCheck.isChecked(),String.valueOf(daysOfAuction),description.getText().toString(),mImageUrls,fUser.getUid());
+                                Date currentTime = Calendar.getInstance().getTime();
+                                Product newproduct=new Product(productId,category,title.getText().toString(),startprice.getText().toString(),increasingRate.getText().toString(),notusedCheck.isChecked(),String.valueOf(daysOfAuction),description.getText().toString(),mImageUrls,fUser.getUid(),currentTime);
 
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
@@ -173,6 +177,22 @@ public class SellFragment extends Fragment {
                                                 .set(newproduct, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
+
+
+                                                Map<Object,String> auctions=new HashMap<>();
+                                                auctions.put("currentprice"," ");
+                                                auctions.put("startingPrice",startprice.getText().toString());
+                                                auctions.put("bidders"," ");
+                                                firebaseFirestore.collection("Auctions").document(productId)
+                                                        .set(auctions, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        Toast toast=DynamicToast.makeSuccess(getContext(),"Başarılı!", Toast.LENGTH_SHORT);
+                                                        toast.setGravity(Gravity.TOP, 0, 0);
+                                                        toast.show();
+                                                    }
+                                                });
+
                                                 progressDialog.dismiss();
 
                                                 Toast toast=DynamicToast.makeSuccess(getContext(),"Başarılı!", Toast.LENGTH_SHORT);

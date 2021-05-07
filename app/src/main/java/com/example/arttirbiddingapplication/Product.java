@@ -1,18 +1,20 @@
 package com.example.arttirbiddingapplication;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Product {
 
     private String title,category,startingPrice,increasingRate,daysOfAuction,details,productId,sellerId;
     private ArrayList<String> pictures;
     private boolean condition;
+    private Date date;
 
     public Product(){
 
     }
 
-    public Product(String productId,String category,String title,String startingPrice, String increasingRate, boolean condition, String daysOfAuction, String details, ArrayList<String> pictures,String sellerId) {
+    public Product(String productId,String category,String title,String startingPrice, String increasingRate, boolean condition, String daysOfAuction, String details, ArrayList<String> pictures,String sellerId,Date date) {
        this.sellerId=sellerId;
         this.productId=productId;
         this.title = title;
@@ -23,6 +25,15 @@ public class Product {
         this.daysOfAuction = daysOfAuction;
         this.details = details;
         this.pictures = pictures;
+        this.date=date;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getSellerId() {

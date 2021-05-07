@@ -19,9 +19,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import maes.tech.intentanim.CustomIntent;
 
@@ -35,12 +44,28 @@ public class BidActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerItemViewAdapter2 recyclerItemViewAdapter2;
     private String increasingRate;
+    String tempPrice;
     private ArrayList<BidderList> bidderLists=new ArrayList<>();
+
+
+    private FirebaseFirestore firebaseFirestore;
+    private FirebaseAuth fAuth;
+    private FirebaseUser fUser;
+    FirebaseStorage storage;
+    StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bid);
+
+        firebaseFirestore=FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        fUser = FirebaseAuth.getInstance().getCurrentUser();
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+
 
         txtcondition=findViewById(R.id.txtCondition);
         txtDetails=findViewById(R.id.txtDetails);
@@ -52,6 +77,7 @@ public class BidActivity extends AppCompatActivity {
         price=findViewById(R.id.txtShowPrice);
         bidderList=findViewById(R.id.bidderList);
 
+
         Intent intent=getIntent();
         String productId=intent.getStringExtra("productId");
         String title=intent.getStringExtra("title");
@@ -60,6 +86,79 @@ public class BidActivity extends AppCompatActivity {
         condition=intent.getBooleanExtra("condition",false);
         pictures=intent.getStringArrayListExtra("photos");
 
+
+
+        //fiyatı çek  , days of auction , yüklendiği tarih
+
+        //PRODUCTS
+        DocumentReference docRef = firebaseFirestore.collection("PRODUCTS").document(productId);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+
+                String daysofAuction = documentSnapshot.getString("daysOfAuction");
+                Date date = documentSnapshot.getDate("date");
+
+
+
+
+             //   name.setText(documentSnapshot.getString("name")
+                // surname.setText(documentSnapshot.getString("surname"));
+            }
+        });
+
+        //AUCTIONS
+        DocumentReference docReff = firebaseFirestore.collection("Auctions").document(productId);
+        docReff.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+
+
+                String priceee = documentSnapshot.getString("startingPrice");
+                tempPrice = price.getText().toString();
+                String currentPrice = documentSnapshot.getString("currentprice");
+
+                String bidders = documentSnapshot.getString("bidders");
+
+                if(!(bidders.equals(" "))){
+
+                }else{
+                    Toast toast= DynamicToast.makeError(getApplicationContext(),"Kimse Daha Fiyat Arttırmadı!", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.TOP, 0, 0);
+                    toast.show();
+                }
+
+
+                if(currentPrice.equals(" ")){
+                        price.setText(priceee);
+                        tempPrice = price.getText().toString();
+                }else{
+                        price.setText(currentPrice);
+                        tempPrice = price.getText().toString();
+                    }
+            }
+        });
+
+
+
+
+        DocumentReference docRefasd = firebaseFirestore.collection("PRODUCTS").document(productId);
+        docRefasd.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+
+              //  Date date = documentSnapshot.getDate("date");
+
+
+
+
+                //   name.setText(documentSnapshot.getString("name")
+                // surname.setText(documentSnapshot.getString("surname"));
+            }
+        });
 
 
 
@@ -82,7 +181,7 @@ public class BidActivity extends AppCompatActivity {
 
         initRecyclerView();
 
-        String tempPrice=price.getText().toString();
+
 
 
         plus.setOnClickListener(new View.OnClickListener() {
