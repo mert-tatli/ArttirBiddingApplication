@@ -16,7 +16,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="56dp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/ic_input_shape"
             android:drawableLeft="@drawable/ic_icons8_edit__1_"
@@ -33,7 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+            app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
 
         <EditText
             android:id="@+id/txt_Surname2"
@@ -75,19 +75,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="52dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/iconfinder"
-            app:layout_collapseMode="parallax"
-            app:layout_collapseParallaxMultiplier="0.7"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="56dp"
+            android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+
+        </de.hdodenhof.circleimageview.CircleImageView>
 
         <ImageView
             android:id="@+id/btn_logOut"
@@ -114,14 +114,14 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/ic_add"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton"
-            app:layout_constraintHorizontal_bias="0.946"
-            app:layout_constraintStart_toStartOf="@+id/imageButton"
-            app:layout_constraintTop_toTopOf="@+id/imageButton" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="168dp"
+            android:src="@drawable/ic_photo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/circleImageView"
+            app:layout_constraintTop_toBottomOf="@+id/btn_logOut" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

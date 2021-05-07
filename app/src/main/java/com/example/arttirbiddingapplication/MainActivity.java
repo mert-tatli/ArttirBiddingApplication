@@ -25,12 +25,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bottomNavigationView=findViewById(R.id.bottom_nav_menu);
-        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DashboardFragment()).commit();
+
+
         fAuth=FirebaseAuth.getInstance();
         fUser=FirebaseAuth.getInstance().getCurrentUser();
         firebaseFirestore= FirebaseFirestore.getInstance();
+
+        bottomNavigationView=findViewById(R.id.bottom_nav_menu);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
+        if (fUser!=null)
+        {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DashboardFragment()).commit();
+        }
+        else {
+            Intent register=new Intent(MainActivity.this,RegisterActivity.class);
+            startActivity(register);
+            finish();
+        }
 
     }
 
@@ -40,7 +51,17 @@ public class MainActivity extends AppCompatActivity {
                Fragment fragment = null;
                switch (item.getItemId()) {
                    case R.id.bottom_nav_dashboard:
-                       fragment = new DashboardFragment();
+                       if (fUser!=null)
+                       {
+                           fragment = new DashboardFragment();
+                       }
+                       else {
+                           Intent register=new Intent(MainActivity.this,RegisterActivity.class);
+                           startActivity(register);
+                           finish();
+                           return false;
+                       }
+
                        break;
                    case R.id.bottom_nav_sell:
                        if (fUser!=null)
@@ -69,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                    case R.id.bottom_nav_notification:
                        if (fUser!=null)
                        {
-
+                            fragment=new NotificationFragment();
                        }
                        else {
                            Intent register=new Intent(MainActivity.this,RegisterActivity.class);

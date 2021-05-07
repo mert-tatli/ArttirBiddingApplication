@@ -56,7 +56,7 @@ public class SellFragment extends Fragment {
     private ArrayList<Uri> defaultUri = new ArrayList<>();
     private RecyclerView recyclerView;
 
-    private String[] arraySpinner = new String[]{"Kategori Seçiniz", "Elektronik", "Ev Eşyaları", "Oyun", "Araç", "Araç parçaları", "Bahçe ve Hırdavat", "Spor ve Outdoor", "Moda ve Aksesuar", "Bebek ve Çocuk", "Film,Kitap ve Müzik", "Diğer"};
+    private String[] arraySpinner = new String[]{"Kategori Seçiniz", "Elektronik","Araba","Motor","Diğer"};
     private Spinner s1;
     private String category = "";
     private ImageView addImage;
@@ -66,7 +66,7 @@ public class SellFragment extends Fragment {
     private int daysOfAuction = 1;
     private boolean isImageChosen=false;
     private Uri imageUri;
-    private RecyclerItemViewAdaptor adapter;
+    private RecyclerItemViewAdapter adapter;
     private String productId;
 
     @Override
@@ -157,6 +157,7 @@ public class SellFragment extends Fragment {
                             if (isImageChosen==true) {
 
                                 final ProgressDialog progressDialog = new ProgressDialog(getContext());
+                                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                                 progressDialog.setTitle("Ürün hazırlanıyor...");
                                 progressDialog.show();
 
@@ -239,7 +240,7 @@ public class SellFragment extends Fragment {
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new RecyclerItemViewAdaptor(getActivity(), defaultUri);
+        adapter = new RecyclerItemViewAdapter(getActivity(), defaultUri);
         recyclerView.setAdapter(adapter);
     }
 

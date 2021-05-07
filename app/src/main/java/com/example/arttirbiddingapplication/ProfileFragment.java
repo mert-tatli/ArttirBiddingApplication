@@ -84,7 +84,7 @@ public class ProfileFragment extends Fragment {
 
         name=view.findViewById(R.id.txt_Name2);
         surname=view.findViewById(R.id.txt_Surname2);
-        imageView = view.findViewById(R.id.imageButton);
+        imageView = view.findViewById(R.id.circleImageView);
         save=view.findViewById(R.id.btn_updateProfile);
         s1 = view.findViewById(R.id.spinner);
 
@@ -102,6 +102,7 @@ public class ProfileFragment extends Fragment {
         });
 
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setTitle("Yükleniyor..");
         progressDialog.show();
 
@@ -179,11 +180,11 @@ public class ProfileFragment extends Fragment {
         userInformation.put("name",name.getText().toString());
         userInformation.put("surname",surname.getText().toString());
         userInformation.put("city",from);
+        userInformation.put("photoUrl",fUser.getUid()+"/profilePicture/profile.jpg");
         firebaseFirestore.collection("USERS").document(fAuth.getCurrentUser().getUid())
                 .set(userInformation, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-
                 Toast toast=DynamicToast.makeSuccess(getContext(),"Başarılı!", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.TOP, 0, 0);
                 toast.show();

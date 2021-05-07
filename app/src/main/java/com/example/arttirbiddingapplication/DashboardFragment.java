@@ -1,5 +1,6 @@
 package com.example.arttirbiddingapplication;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -50,7 +51,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view= inflater.inflate(R.layout.fragment_dashboard, container, false);
 
 
@@ -59,8 +60,6 @@ public class DashboardFragment extends Fragment {
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-
-
 
         categoryRecycler = view.findViewById(R.id.categoryRecyclerView);
         productRecycler = view.findViewById(R.id.productRecyclerView);
@@ -71,54 +70,26 @@ public class DashboardFragment extends Fragment {
         categories.add(new Category("https://image.flaticon.com/icons/png/512/568/568148.png","MOTOR"));
         categories.add(new Category("https://files.softicons.com/download/application-icons/circle-icons-by-martz90/png/512x512/go%20launcher.png","DİĞER"));
 
-        product_images.add("https://cdn.vatanbilgisayar.com/Upload/PRODUCT/samsung/thumb/117722-anaa_large.jpg");
-      //  products.add(new Product("123456798","Elektronik","Samsung s20 plus 512gb Hafıza","12","45",true,"3","asdasdasdasasdasdasd",product_images,"6SOpfEZyd2bORvgOF8xZqcvDugt2"));
-        //  products.add(new Product("1234567982","Elektronik","Samsung s20 plus 512gb Hafıza","12","45",true,"3","asdasdasdasasdasdasd",product_images,"6SOpfEZyd2bORvgOF8xZqcvDugt2"));
-        //  products.add(new Product("1234567983","Elektronik","Samsung s20 plus 512gb Hafıza","12","45",true,"3","asdasdasdasasdasdasd",product_images,"6SOpfEZyd2bORvgOF8xZqcvDugt2"));
-        //  products.add(new Product("1234567984","Elektronik","Samsung s20 plus 512gb Hafıza","12","45",true,"3","asdasdasdasasdasdasd",product_images,"6SOpfEZyd2bORvgOF8xZqcvDugt2"));
-        //   products.add(new Product("1234567985","Elektronik","Samsung s20 plus 512gb Hafıza","12","45",true,"3","asdasdasdasasdasdasd",product_images,"6SOpfEZyd2bORvgOF8xZqcvDugt2"));
-        //  products.add(new Product("1234567985","Elektronik","Samsung s20 plus 512gb Hafıza","12","45",true,"3","asdasdasdasasdasdasd",product_images,"6SOpfEZyd2bORvgOF8xZqcvDugt2"));
-//
-
-
-     /*   firebaseFirestore.collection("PRODUCTS").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    ArrayList<Product> mylistofDocuments = (ArrayList)task.getResult().getDocuments();
-                    products = mylistofDocuments;
-                }
-            }
-        }); */
-
 
         firebaseFirestore.collection("PRODUCTS").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
                 if (task.isSuccessful()) {
                     List<String> list = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Product p = document.toObject(Product.class);
                         products.add(p);
-                       // System.out.println(p.toString());
                     }
-
                     initRecyclerView();
-
                     initProductRecyclerView();
-
-
                 } else {
 
                 }
             }
         });
-
-
         return view;
-
-
-
     }
 
     private void initRecyclerView() {

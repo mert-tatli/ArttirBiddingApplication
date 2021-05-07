@@ -12,13 +12,13 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 
-public class RecyclerItemViewAdaptor extends RecyclerView.Adapter<RecyclerItemViewAdaptor.ViewHolder> {
+public class RecyclerItemViewAdapter extends RecyclerView.Adapter<RecyclerItemViewAdapter.ViewHolder> {
 
     public static final String TAG="RecyclerItemViewAdapter";
     private ArrayList<Uri> mImageUrls=new ArrayList<>();
     private Context context;
 
-    public RecyclerItemViewAdaptor(Context context,ArrayList<Uri> mImageUrls) {
+    public RecyclerItemViewAdapter(Context context, ArrayList<Uri> mImageUrls) {
         this.mImageUrls = mImageUrls;
         this.context = context;
     }

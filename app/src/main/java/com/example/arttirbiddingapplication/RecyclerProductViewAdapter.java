@@ -1,6 +1,7 @@
 package com.example.arttirbiddingapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+
+import maes.tech.intentanim.CustomIntent;
 
 public class RecyclerProductViewAdapter extends RecyclerView.Adapter<RecyclerProductViewAdapter.ViewHolder> {
 
@@ -45,6 +48,16 @@ public class RecyclerProductViewAdapter extends RecyclerView.Adapter<RecyclerPro
         holder.itemImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent intent=new Intent(context,BidActivity.class);
+                intent.putExtra("productId",products.get(position).getProductId());
+                intent.putExtra("title",products.get(position).getTitle());
+                intent.putExtra("details",products.get(position).getDetails());
+                intent.putExtra("condition",products.get(position).getCondition());
+                intent.putExtra("increasingRate",products.get(position).getIncreasingRate());
+                intent.putStringArrayListExtra("photos",products.get(position).getPictures());
+                context.startActivity(intent);
+                CustomIntent.customType(context,"bottom-to-up");
 
             }
         });
