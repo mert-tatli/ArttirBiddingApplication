@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -38,9 +40,11 @@ import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
@@ -54,12 +58,12 @@ public class ProfileFragment extends Fragment {
     private Uri filePath;
     private final int PICK_IMAGE_REQUEST = 71;
     private String from="";
-    private ImageView imageView;
+    private ImageView imageView,imageView2;
     private Button save;
     private Spinner s1;
     private ImageView logOut;
     private EditText name,surname;
-
+    private String photoUrl;
 
 
     private FirebaseFirestore firebaseFirestore;
@@ -74,8 +78,6 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-
-
         firebaseFirestore=FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
         fUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -85,6 +87,7 @@ public class ProfileFragment extends Fragment {
         name=view.findViewById(R.id.txt_Name2);
         surname=view.findViewById(R.id.txt_Surname2);
         imageView = view.findViewById(R.id.circleImageView);
+        imageView2=view.findViewById(R.id.imageView2);
         save=view.findViewById(R.id.btn_updateProfile);
         s1 = view.findViewById(R.id.spinner);
 
@@ -102,7 +105,7 @@ public class ProfileFragment extends Fragment {
         });
 
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setTitle("Yükleniyor..");
         progressDialog.show();
 
@@ -134,13 +137,17 @@ public class ProfileFragment extends Fragment {
                     s1.setSelection(spinnerPosition);
                 }
 
-                progressDialog.dismiss();
-
             }
         });
 
 
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
 
+            public void run() {
+                progressDialog.dismiss();
+            }
+        }, 2000);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,8 +155,6 @@ public class ProfileFragment extends Fragment {
                 checkInputs();
             }
         });
-
-
 
         logOut = view.findViewById(R.id.btn_logOut);
         logOut.setOnClickListener(new View.OnClickListener() {
@@ -163,9 +168,7 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-
-
-        imageView.setOnClickListener(new View.OnClickListener() {
+        imageView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 chooseImage();
@@ -174,24 +177,38 @@ public class ProfileFragment extends Fragment {
 
         return view;
     }
-
     private void updateData(){
-        Map<Object,String> userInformation=new HashMap<>();
-        userInformation.put("name",name.getText().toString());
-        userInformation.put("surname",surname.getText().toString());
-        userInformation.put("city",from);
-        userInformation.put("photoUrl",fUser.getUid()+"/profilePicture/profile.jpg");
-        firebaseFirestore.collection("USERS").document(fAuth.getCurrentUser().getUid())
-                .set(userInformation, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Toast toast=DynamicToast.makeSuccess(getContext(),"Başarılı!", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.TOP, 0, 0);
-                toast.show();
-            }
-        });
-    }
 
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Kaydediliyor...");
+        progressDialog.show();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+
+            public void run() {
+                Map<Object,String> userInformation=new HashMap<>();
+                userInformation.put("name",name.getText().toString());
+                userInformation.put("surname",surname.getText().toString());
+                userInformation.put("city",from);
+                userInformation.put("photoUrl",photoUrl);
+                firebaseFirestore.collection("USERS").document(fAuth.getCurrentUser().getUid())
+                        .set(userInformation, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        progressDialog.dismiss();
+                        Toast toast=DynamicToast.makeSuccess(getContext(),"Başarılı!", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.TOP, 0, 40);
+                        toast.show();
+
+                    }
+                });
+            }
+        }, 4000);
+
+
+
+    }
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -215,45 +232,24 @@ public class ProfileFragment extends Fragment {
             }
         }
     }
-
     private void uploadImage() {
 
         if(filePath != null)
         {
-            final ProgressDialog progressDialog = new ProgressDialog(getContext());
-            progressDialog.setTitle("Kaydediliyor...");
-            progressDialog.show();
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference(fUser.getUid()).child("profilePicture").child("profile.jpg");
+            storageReference
+                    .putFile(filePath).addOnSuccessListener(taskSnapshot ->
+                    storageReference.getDownloadUrl().addOnCompleteListener(task -> {
+                        String url = Objects.requireNonNull(task.getResult()).toString();
+                        photoUrl=url;
+                    }))
+                    .addOnFailureListener(e -> {
 
-
-            StorageReference ref = storageReference.child(fAuth.getUid()).child("profilePicture/profile.jpg");
-            ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Karşıya Yükleniyor "+(int)progress+"%");
-                        }
                     });
         }
     }
 
     private void checkInputs(){
-
 
             if(!TextUtils.isEmpty(name.getText())){
                 if(!TextUtils.isEmpty(surname.getText())) {
@@ -263,7 +259,9 @@ public class ProfileFragment extends Fragment {
                             updateData();
                     }
                     else {
-                        Toast.makeText(getContext(),"Şehir Seçiniz!",Toast.LENGTH_SHORT).show();
+                        Toast toast=DynamicToast.makeWarning(getContext(),"Şehir Seçiniz!", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.TOP, 0, 40);
+                        toast.show();
                     }
 
                 }

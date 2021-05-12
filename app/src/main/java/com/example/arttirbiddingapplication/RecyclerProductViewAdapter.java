@@ -53,9 +53,10 @@ public class RecyclerProductViewAdapter extends RecyclerView.Adapter<RecyclerPro
                 intent.putExtra("productId",products.get(position).getProductId());
                 intent.putExtra("title",products.get(position).getTitle());
                 intent.putExtra("details",products.get(position).getDetails());
-                intent.putExtra("condition",products.get(position).getCondition());
-                intent.putExtra("increasingRate",products.get(position).getIncreasingRate());
+                intent.putExtra("condition",products.get(position).isCondition());
+                intent.putExtra("startingPrice",products.get(position).getStartingPrice());
                 intent.putStringArrayListExtra("photos",products.get(position).getPictures());
+
                 context.startActivity(intent);
                 CustomIntent.customType(context,"bottom-to-up");
 

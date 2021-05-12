@@ -40,6 +40,8 @@ import com.google.firebase.storage.StorageReference;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.Calendar;
@@ -72,6 +74,7 @@ public class SellFragment extends Fragment {
     private Uri imageUri;
     private RecyclerItemViewAdapter adapter;
     private String productId;
+    private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -166,8 +169,10 @@ public class SellFragment extends Fragment {
                                 progressDialog.show();
 
                                 uploadImages();
-                                Date currentTime = Calendar.getInstance().getTime();
-                                Product newproduct=new Product(productId,category,title.getText().toString(),startprice.getText().toString(),increasingRate.getText().toString(),notusedCheck.isChecked(),String.valueOf(daysOfAuction),description.getText().toString(),mImageUrls,fUser.getUid(),currentTime);
+                                Date currentdate = new Date();
+                                String endDate=addDate(currentdate,daysOfAuction);
+
+                                Product newproduct=new Product(productId,category,title.getText().toString(),startprice.getText().toString(),notusedCheck.isChecked(),description.getText().toString(),mImageUrls,fUser.getUid(),endDate);
 
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
@@ -178,26 +183,22 @@ public class SellFragment extends Fragment {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
 
+                                                ArrayList<Bidder> bidders=new ArrayList<>();
+                                                Auction auction=new Auction("",startprice.getText().toString(),increasingRate.getText().toString(),String.valueOf(daysOfAuction),endDate,bidders);
 
-                                                Map<Object,String> auctions=new HashMap<>();
-                                                auctions.put("currentprice"," ");
-                                                auctions.put("startingPrice",startprice.getText().toString());
-                                                auctions.put("bidders"," ");
+
                                                 firebaseFirestore.collection("Auctions").document(productId)
-                                                        .set(auctions, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        .set(auction, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
+
+                                                        progressDialog.dismiss();
                                                         Toast toast=DynamicToast.makeSuccess(getContext(),"Başarılı!", Toast.LENGTH_SHORT);
-                                                        toast.setGravity(Gravity.TOP, 0, 0);
+                                                        toast.setGravity(Gravity.TOP, 0, 40);
                                                         toast.show();
+
                                                     }
                                                 });
-
-                                                progressDialog.dismiss();
-
-                                                Toast toast=DynamicToast.makeSuccess(getContext(),"Başarılı!", Toast.LENGTH_SHORT);
-                                                toast.setGravity(Gravity.TOP, 0, 0);
-                                                toast.show();
 
                                             }
                                         });
@@ -208,7 +209,7 @@ public class SellFragment extends Fragment {
                             else {
 
                                 Toast toast= DynamicToast.makeError(getContext(),"Lütfen ürün resmi seçiniz !", Toast.LENGTH_SHORT);
-                                toast.setGravity(Gravity.TOP, 0, 0);
+                                toast.setGravity(Gravity.TOP, 0, 40);
                                 toast.show();
                             }
 
@@ -307,6 +308,17 @@ public class SellFragment extends Fragment {
 
                     });
         }
+    }
+
+    public String addDate(Date date,int amount){
+
+        Date dtStartDate=date;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar c = Calendar.getInstance();
+        c.setTime(dtStartDate);
+        c.add(Calendar.DATE, amount);
+        return sdf.format(c.getTime());
+
     }
 
 }

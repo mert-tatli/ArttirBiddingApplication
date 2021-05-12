@@ -5,52 +5,26 @@ import java.util.Date;
 
 public class Product {
 
-    private String title,category,startingPrice,increasingRate,daysOfAuction,details,productId,sellerId;
+    private String title,category,startingPrice,details,productId,sellerId,endDate;
     private ArrayList<String> pictures;
     private boolean condition;
-    private Date date;
 
     public Product(){
 
     }
 
-    public Product(String productId,String category,String title,String startingPrice, String increasingRate, boolean condition, String daysOfAuction, String details, ArrayList<String> pictures,String sellerId,Date date) {
-       this.sellerId=sellerId;
-        this.productId=productId;
+    public Product(String productId, String category, String title,String startingPrice, boolean condition, String details,ArrayList<String> pictures, String sellerId,String endDate) {
         this.title = title;
         this.category = category;
         this.startingPrice = startingPrice;
-        this.increasingRate = increasingRate;
-        this.condition = condition;
-        this.daysOfAuction = daysOfAuction;
         this.details = details;
-        this.pictures = pictures;
-        this.date=date;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getSellerId() {
-        return sellerId;
-    }
-
-    public void setSellerId(String sellerId) {
-        this.sellerId = sellerId;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
         this.productId = productId;
+        this.sellerId = sellerId;
+        this.endDate = endDate;
+        this.pictures = pictures;
+        this.condition = condition;
     }
+
     public String getTitle() {
         return title;
     }
@@ -75,36 +49,36 @@ public class Product {
         this.startingPrice = startingPrice;
     }
 
-    public String getIncreasingRate() {
-        return increasingRate;
-    }
-
-    public void setIncreasingRate(String increasingRate) {
-        this.increasingRate = increasingRate;
-    }
-
-    public boolean getCondition() {
-        return condition;
-    }
-
-    public void setCondition(boolean condition) {
-        this.condition = condition;
-    }
-
-    public String getDaysOfAuction() {
-        return daysOfAuction;
-    }
-
-    public void setDaysOfAuction(String daysOfAuction) {
-        this.daysOfAuction = daysOfAuction;
-    }
-
     public String getDetails() {
         return details;
     }
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public ArrayList<String> getPictures() {
@@ -115,19 +89,11 @@ public class Product {
         this.pictures = pictures;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "title='" + title + '\'' +
-                ", category='" + category + '\'' +
-                ", startingPrice='" + startingPrice + '\'' +
-                ", increasingRate='" + increasingRate + '\'' +
-                ", daysOfAuction='" + daysOfAuction + '\'' +
-                ", details='" + details + '\'' +
-                ", productId='" + productId + '\'' +
-                ", sellerId='" + sellerId + '\'' +
-                ", pictures=" + pictures +
-                ", condition=" + condition +
-                '}';
+    public boolean isCondition() {
+        return condition;
+    }
+
+    public void setCondition(boolean condition) {
+        this.condition = condition;
     }
 }

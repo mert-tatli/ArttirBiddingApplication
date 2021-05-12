@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -279,7 +281,9 @@ public class SignUpFragment extends Fragment {
                             else {
                                 progressBar.setVisibility(View.INVISIBLE);
                                 String error=task.getException().getMessage();
-                                Toast.makeText(getActivity(),error,Toast.LENGTH_SHORT).show();
+                                Toast toast= DynamicToast.makeWarning(getContext(),error, Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.TOP, 0, 40);
+                                toast.show();
                             }
                         }
                     });
