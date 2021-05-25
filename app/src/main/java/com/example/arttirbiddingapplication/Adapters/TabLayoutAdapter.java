@@ -1,4 +1,4 @@
-package com.example.arttirbiddingapplication;
+package com.example.arttirbiddingapplication.Adapters;
 
 import android.content.Context;
 
@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.example.arttirbiddingapplication.Fragments.BiddingFragment;
+import com.example.arttirbiddingapplication.Fragments.OffersFragment;
 
 public class TabLayoutAdapter extends FragmentPagerAdapter {
 

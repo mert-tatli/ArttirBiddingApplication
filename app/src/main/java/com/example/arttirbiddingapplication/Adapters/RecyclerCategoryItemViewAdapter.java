@@ -1,7 +1,6 @@
-package com.example.arttirbiddingapplication;
+package com.example.arttirbiddingapplication.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.arttirbiddingapplication.Models.Category;
+import com.example.arttirbiddingapplication.OnCategoryItemListener;
+import com.example.arttirbiddingapplication.R;
 
 import java.util.ArrayList;
 
@@ -42,6 +44,7 @@ public class RecyclerCategoryItemViewAdapter extends RecyclerView.Adapter<Recycl
                 .load(categories.get(position).getImageUrl())
                 .into(holder.itemImage);
 
+        holder.catName.setText(categories.get(position).getCategoryName());
 
         holder.itemImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +54,7 @@ public class RecyclerCategoryItemViewAdapter extends RecyclerView.Adapter<Recycl
 
             }
         });
-        holder.catName.setText(categories.get(position).getCategoryName());
+
 
     }
     @Override

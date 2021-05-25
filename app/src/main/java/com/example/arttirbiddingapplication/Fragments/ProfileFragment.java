@@ -1,4 +1,4 @@
-package com.example.arttirbiddingapplication;
+package com.example.arttirbiddingapplication.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -22,6 +22,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.example.arttirbiddingapplication.R;
+import com.example.arttirbiddingapplication.RegisterActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -107,6 +110,7 @@ public class ProfileFragment extends Fragment {
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setTitle("Yükleniyor..");
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
 
@@ -181,6 +185,7 @@ public class ProfileFragment extends Fragment {
 
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setTitle("Kaydediliyor...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
         Handler handler = new Handler();

@@ -1,4 +1,4 @@
-package com.example.arttirbiddingapplication;
+package com.example.arttirbiddingapplication.Fragments;
 
 import android.os.Bundle;
 
@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.arttirbiddingapplication.Adapters.TabLayoutAdapter;
+import com.example.arttirbiddingapplication.R;
 import com.google.android.material.tabs.TabLayout;
 
 
@@ -26,7 +28,7 @@ public class MyAuctionsFragment extends Fragment {
         TabLayout tabLayout = (TabLayout)view.findViewById(R.id.tabLayout);
 
         tabLayout.addTab(tabLayout.newTab().setText("Arttırdıklarım"));
-        tabLayout.addTab(tabLayout.newTab().setText("Aldığım Teklifler"));
+        tabLayout.addTab(tabLayout.newTab().setText("Ürünlerim"));
 
         TabLayoutAdapter adapter=new TabLayoutAdapter(getActivity(),getChildFragmentManager(),tabLayout.getTabCount());
         viewPager.setAdapter(adapter);

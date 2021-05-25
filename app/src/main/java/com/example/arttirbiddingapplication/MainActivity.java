@@ -6,6 +6,12 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.example.arttirbiddingapplication.Fragments.DashboardFragment;
+import com.example.arttirbiddingapplication.Fragments.MyAuctionsFragment;
+import com.example.arttirbiddingapplication.Fragments.MessageFragment;
+import com.example.arttirbiddingapplication.Fragments.ProfileFragment;
+import com.example.arttirbiddingapplication.Fragments.SellFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -85,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                    case R.id.bottom_nav_notification:
                        if (fUser!=null)
                        {
-                            fragment=new NotificationFragment();
+                            fragment=new MessageFragment();
                        }
                        else {
                            Intent register=new Intent(MainActivity.this,RegisterActivity.class);

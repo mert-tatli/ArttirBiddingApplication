@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
+import com.example.arttirbiddingapplication.Fragments.SignInFragment;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private FrameLayout frameLayout;

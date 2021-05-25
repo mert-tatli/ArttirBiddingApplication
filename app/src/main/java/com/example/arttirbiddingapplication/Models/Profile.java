@@ -1,4 +1,4 @@
-package com.example.arttirbiddingapplication;
+package com.example.arttirbiddingapplication.Models;
 
 public class Profile {
 
@@ -44,5 +44,15 @@ public class Profile {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", photoUrl='" + photoUrl + '\'' +
+                ", price='" + price + '\'' +
+                '}';
     }
 }

@@ -50,15 +50,15 @@ import java.util.Map;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class BidActivity extends AppCompatActivity {
+public class BidActivity2 extends AppCompatActivity {
 
     private ArrayList<String> pictures=new ArrayList<>();
-    private TextView txtTitle,txtDetails,txtcondition,rateInfo,bidderList,txtTime,txtStartingPrice;
+    private TextView txtTitle,txtDetails,txtcondition,bidderList,txtTime,txtStartingPrice;
     private EditText price;
-    private Button plus,minus,btnBid;
     private Boolean condition;
-    private String increasingRate,tempPrice,date,title2,details2,sellerId;
+    private String tempPrice,date,title2,details2,sellerId;
     private String landingPrice="";
+    private Button contact;
     private ArrayList<Bidder> bidders=new ArrayList<>();
     private ArrayList<Profile> bidInfo=new ArrayList<>();
     private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -79,7 +79,7 @@ public class BidActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bid);
+        setContentView(R.layout.activity_bid2);
 
         firebaseFirestore=FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
@@ -87,19 +87,15 @@ public class BidActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-
-        txtcondition=findViewById(R.id.txtCondition);
-        txtDetails=findViewById(R.id.txtDetails);
-        txtTitle=findViewById(R.id.txtTitleBid);
-        recyclerView=findViewById(R.id.recyclerItemImages);
-        plus=findViewById(R.id.btnPlus);
-        minus=findViewById(R.id.btnMinus);
-        rateInfo=findViewById(R.id.rateInfo);
-        price=findViewById(R.id.txtShowPrice);
-        bidderList=findViewById(R.id.bidderList);
-        btnBid=findViewById(R.id.btnBid);
-        txtTime=findViewById(R.id.txtTime);
-        txtStartingPrice=findViewById(R.id.startingPriceText);
+        txtcondition=findViewById(R.id.txtCondition1);
+        txtDetails=findViewById(R.id.txtDetails1);
+        txtTitle=findViewById(R.id.txtTitleBid1);
+        recyclerView=findViewById(R.id.recyclerItemImages1);
+        price=findViewById(R.id.txtShowPrice1);
+        bidderList=findViewById(R.id.bidderList1);
+        txtTime=findViewById(R.id.txtTime1);
+        txtStartingPrice=findViewById(R.id.startingPriceText1);
+        contact=findViewById(R.id.btnMessage2);
 
         Intent intent=getIntent();
         String productId=intent.getStringExtra("productId");
@@ -111,125 +107,57 @@ public class BidActivity extends AppCompatActivity {
         tempPrice=intent.getStringExtra("startingPrice");
         sellerId=intent.getStringExtra("sellerId");
 
+        if(sellerId.equals(fUser.getUid()))
+        {
+            contact.setVisibility(View.INVISIBLE);
+            contact.setEnabled(false);
+        }
+
+        txtStartingPrice.setText(tempPrice+" TL");
         title2=title;
         details2=details;
-        txtStartingPrice.setText(tempPrice+" TL");
 
         initialize(productId);
         initRecyclerView();
         checkCurrentBid(productId);
-
-
-        plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int sum=Integer.parseInt(price.getText().toString())  + Integer.parseInt(increasingRate);
-                price.setText(String.valueOf(sum));
-            }
-        });
-
-        minus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Integer.parseInt(price.getText().toString()) >Integer.parseInt(tempPrice))
-                {
-                    int substraction=Integer.parseInt(price.getText().toString())  - Integer.parseInt(increasingRate);
-                    price.setText(String.valueOf(substraction));
-                }
-                else
-                {
-                    Toast toast= DynamicToast.makeWarning(getApplicationContext(),"Mevcut Fiyatın altına inemezsiniz!", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.TOP, 0, 40);
-                    toast.show();
-                }
-
-            }
-        });
 
         bidderList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (!bidders.isEmpty())
-                    {
-                        final Dialog dialog = new Dialog(BidActivity.this);
-                        dialog.setContentView(R.layout.dialog_list_view);
-                        if (dialog.getWindow() != null) {
-                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // this is optional
-                        }
-                        ListView listView = dialog.findViewById(R.id.lv_bidding_users);
-                        ArrayAdapter arrayAdapter = new BidderListAdapter(BidActivity.this, R.layout.assignment_dialog_list_layout, bidInfo);
-                        listView.setAdapter(arrayAdapter);
-                        listView.setClickable(false);
-                        dialog.show();
-                    }
-                    else {
-                        Toast toast=DynamicToast.makeWarning(BidActivity.this,"Bu ürün henüz arttırılmadı!", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.TOP, 0, 40);
-                        toast.show();
-                    }
-                }
-        });
-
-        btnBid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!checkDates())
                 {
-                    if (fUser!=null)
-                    {
-                        if (!price.getText().toString().equals(tempPrice)) {
-
-                            bidders.add(new Bidder(fUser.getUid(),price.getText().toString()));
-                            Map<Object,ArrayList<Bidder>> userInformation=new HashMap<>();
-                            userInformation.put("bidders",bidders);
-
-                            firebaseFirestore.collection("Auctions").document(productId)
-                                    .set(userInformation, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-
-                                    Map<Object,String> currentPrice=new HashMap<>();
-                                    currentPrice.put("currentprice",price.getText().toString());
-                                    firebaseFirestore.collection("Auctions").document(productId)
-                                            .set(currentPrice, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            Toast toast=DynamicToast.makeSuccess(BidActivity.this,"Başarılı!", Toast.LENGTH_SHORT);
-                                            toast.setGravity(Gravity.TOP, 0, 40);
-                                            toast.show();
-                                        }
-                                    });
-
-                                }
-                            });
-                        }
-                        else {
-                            Toast toast=DynamicToast.makeError(BidActivity.this,"Arttırabilmek için fiyatı değiştirmeniz gerekmektedir!", Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.TOP, 0, 40);
-                            toast.show();
-                        }
+                    final Dialog dialog = new Dialog(BidActivity2.this);
+                    dialog.setContentView(R.layout.dialog_list_view);
+                    if (dialog.getWindow() != null) {
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // this is optional
                     }
-                    else
-                    {
-                        Toast toast=DynamicToast.makeError(BidActivity.this,"Arttırabilmek için giriş yapmanız gerekmektedir.", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.TOP, 0, 40);
-                        toast.show();
-                    }
+                    ListView listView = dialog.findViewById(R.id.lv_bidding_users);
+                    ArrayAdapter arrayAdapter = new BidderListAdapter(BidActivity2.this, R.layout.assignment_dialog_list_layout, bidInfo);
+                    listView.setAdapter(arrayAdapter);
+                    listView.setClickable(false);
+                    dialog.show();
                 }
                 else {
-                    Toast toast=DynamicToast.makeError(BidActivity.this,"Açık arttırma süresi doldu!", Toast.LENGTH_SHORT);
+                    Toast toast=DynamicToast.makeWarning(BidActivity2.this,"Bu ürün henüz arttırılmadı!", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.TOP, 0, 40);
                     toast.show();
                 }
             }
         });
 
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //send message to seller.
+            }
+        });
+
     }
     private void initRecyclerView() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(BidActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(BidActivity2.this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerItemViewAdapter2 = new RecyclerItemViewAdapter2(BidActivity.this, pictures);
+        recyclerItemViewAdapter2 = new RecyclerItemViewAdapter2(BidActivity2.this, pictures);
         recyclerView.setAdapter(recyclerItemViewAdapter2);
     }
     @Override
@@ -277,10 +205,10 @@ public class BidActivity extends AppCompatActivity {
                     if(documentSnapshot !=null){
                         Auction a=documentSnapshot.toObject(Auction.class);
 
-                         bidders=a.getBidders();
-                         date=a.getDate();
+                        bidders=a.getBidders();
+                        date=a.getDate();
 
-                         landingPrice=a.getCurrentprice();
+                        landingPrice=a.getCurrentprice();
 
                         tempPrice = price.getText().toString();
                         if(a.getCurrentprice().isEmpty()){
@@ -291,8 +219,7 @@ public class BidActivity extends AppCompatActivity {
                             price.setText(a.getCurrentprice());
                             tempPrice = price.getText().toString();
                         }
-                        rateInfo.setText("Bu ürünü "+a.getIncreasingRate()+"TL ve katları olarak arttırabilirsiniz!");
-                        increasingRate=a.getIncreasingRate();
+
 
                     }
                 }
@@ -316,7 +243,7 @@ public class BidActivity extends AppCompatActivity {
                         long Hours = diff / (60 * 60 * 1000) % 24;
                         long Minutes = diff / (60 * 1000) % 60;
                         long Seconds = diff / 1000 % 60;
-                       txtTime.setText(String.format("%02d", Days)+"g "+ String.format("%02d", Hours)+"s "+ String.format("%02d", Minutes)+"dk "+String.format("%02d", Seconds)+"sn");
+                        txtTime.setText(String.format("%02d", Days)+"g "+ String.format("%02d", Hours)+"s "+ String.format("%02d", Minutes)+"dk "+String.format("%02d", Seconds)+"sn");
                     } else {
                         handler.removeCallbacks(runnable);
                     }
@@ -342,11 +269,11 @@ public class BidActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         Date current_date = new Date();
-       if (current_date.after(event_date))
-       {
-            return true;
-       }
-       return false;
+        if (!current_date.after(event_date))
+        {
+            return false;
+        }
+        return true;
     }
 
     private void checkCurrentBid(String productId){
@@ -374,7 +301,7 @@ public class BidActivity extends AppCompatActivity {
                                             landingPrice=currentPrice;
                                             tempPrice=currentPrice;
                                             initialize(productId);
-                                            Toast toast=DynamicToast.makeWarning(BidActivity.this,"Fiyat Değişti!", Toast.LENGTH_SHORT);
+                                            Toast toast=DynamicToast.makeWarning(BidActivity2.this,"Fiyat Değişti!", Toast.LENGTH_SHORT);
                                             toast.setGravity(Gravity.TOP, 0, 40);
                                             toast.show();
                                         }
@@ -397,8 +324,6 @@ public class BidActivity extends AppCompatActivity {
         progressDialog.setTitle("Yükleniyor...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-
-
         getasd(productId);
         countDownStart();
 
@@ -406,12 +331,17 @@ public class BidActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
 
             public void run() {
+                if (checkDates())
+                {
+                    txtTime.setText("Bu ürünün listelenme süresi bitti!");
+
+                }
                 getBidderList();
                 progressDialog.dismiss();
             }
         }, 1000);
 
-        rateInfo.setText("Bu ürünü en az "+increasingRate+"TL arttırabilirsiniz!");
+
         txtTitle.setText(title2);
         txtDetails.setText(details2);
         if (condition){

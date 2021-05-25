@@ -5,20 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_gradient"
-    tools:context=".BidActivity">
+    tools:context=".BidActivity2">
+
+    <Button
+        android:id="@+id/btnMessage2"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/ic_input_shape_button"
+        android:backgroundTint="#FFAB00"
+        android:stateListAnimator="@null"
+        android:text="Satıcı ile iletişime geç"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bidderList1" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerItemImages"
+        android:id="@+id/recyclerItemImages1"
         android:layout_width="match_parent"
         android:layout_height="170dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitleBid" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTitleBid1" />
 
     <TextView
-        android:id="@+id/txtTitleBid"
+        android:id="@+id/txtTitleBid1"
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
@@ -35,19 +52,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txtCondition"
+        android:id="@+id/txtCondition1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Yeni gibi"
         android:textColor="#FFFFFF"
         android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView18"
-        app:layout_constraintStart_toEndOf="@+id/textView18"
-        app:layout_constraintTop_toTopOf="@+id/textView18" />
+        app:layout_constraintBottom_toBottomOf="@+id/textView181"
+        app:layout_constraintStart_toEndOf="@+id/textView181"
+        app:layout_constraintTop_toTopOf="@+id/textView181" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/textView181"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -57,10 +74,10 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtDetails" />
+        app:layout_constraintTop_toBottomOf="@+id/txtDetails1" />
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/textView191"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -74,10 +91,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerItemImages" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerItemImages1" />
 
     <TextView
-        android:id="@+id/txtDetails"
+        android:id="@+id/txtDetails1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -97,13 +114,15 @@
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+        app:layout_constraintTop_toBottomOf="@+id/textView191" />
 
     <EditText
-        android:id="@+id/txtShowPrice"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="20dp"
+        android:id="@+id/txtShowPrice1"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/ettext"
         android:clickable="false"
         android:cursorVisible="false"
@@ -113,74 +132,12 @@
         android:inputType="textPersonName"
         android:text="75000"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/btnMinus"
-        app:layout_constraintStart_toEndOf="@+id/btnMinus"
-        app:layout_constraintTop_toTopOf="@+id/btnMinus"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/btnPlus"
-        android:layout_width="50dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/ettext"
-        android:backgroundTint="@color/white"
-        android:stateListAnimator="@null"
-        android:text="+"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/txtShowPrice"
-        app:layout_constraintStart_toEndOf="@+id/txtShowPrice"
-        app:layout_constraintTop_toTopOf="@+id/txtShowPrice"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/btnMinus"
-        android:layout_width="50dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/ettext"
-        android:backgroundTint="@color/white"
-        android:stateListAnimator="@null"
-        android:text="-"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtbsdsd2" />
-
-    <Button
-        android:id="@+id/btnBid"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/ic_input_shape_button"
-        android:stateListAnimator="@null"
-        android:text="ARTTIR"
-        app:layout_constraintBottom_toBottomOf="@+id/btnMessage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnMessage"
-        app:layout_constraintTop_toTopOf="@+id/btnMessage"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/btnMessage"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/ic_input_shape_button"
-        android:backgroundTint="#FFAB00"
-        android:stateListAnimator="@null"
-        android:text="Satıcı ile iletişime geç"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toStartOf="@+id/btnBid"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rateInfo" />
+        app:layout_constraintTop_toBottomOf="@+id/txtbsdsd21" />
 
     <TextView
-        android:id="@+id/txtbsdsd"
+        android:id="@+id/txtbsdsd1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -191,10 +148,10 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTime" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTime1" />
 
     <TextView
-        android:id="@+id/txtbsdsd2"
+        android:id="@+id/txtbsdsd21"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -206,27 +163,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtbsdsd" />
+        app:layout_constraintTop_toBottomOf="@+id/txtbsdsd1" />
 
     <TextView
-        android:id="@+id/rateInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:text="Bu ürünü en az 5tl arttırabilirsiniz."
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMinus" />
-
-    <TextView
-        android:id="@+id/bidderList"
+        android:id="@+id/bidderList1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/round_corners"
         android:drawableEnd="@android:drawable/ic_menu_info_details"
@@ -238,10 +182,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMessage" />
+        app:layout_constraintTop_toBottomOf="@+id/txtShowPrice1" />
 
     <TextView
-        android:id="@+id/textView20"
+        android:id="@+id/textView201"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -252,23 +196,23 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintTop_toBottomOf="@+id/textView181" />
 
     <TextView
-        android:id="@+id/txtTime"
+        android:id="@+id/txtTime1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="1g 17s 27dk"
+        android:text="SÜRESİ BİTTİ"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView20"
-        app:layout_constraintStart_toEndOf="@+id/textView20"
-        app:layout_constraintTop_toTopOf="@+id/textView20" />
+        app:layout_constraintBottom_toBottomOf="@+id/textView201"
+        app:layout_constraintStart_toEndOf="@+id/textView201"
+        app:layout_constraintTop_toTopOf="@+id/textView201" />
 
     <TextView
-        android:id="@+id/startingPriceText"
+        android:id="@+id/startingPriceText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -276,7 +220,7 @@
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/txtbsdsd"
-        app:layout_constraintStart_toEndOf="@+id/txtbsdsd"
-        app:layout_constraintTop_toTopOf="@+id/txtbsdsd" />
+        app:layout_constraintBottom_toBottomOf="@+id/txtbsdsd1"
+        app:layout_constraintStart_toEndOf="@+id/txtbsdsd1"
+        app:layout_constraintTop_toTopOf="@+id/txtbsdsd1" />
 </androidx.constraintlayout.widget.ConstraintLayout>

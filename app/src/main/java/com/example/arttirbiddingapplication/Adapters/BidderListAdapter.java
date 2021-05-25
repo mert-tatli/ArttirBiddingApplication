@@ -1,4 +1,4 @@
-package com.example.arttirbiddingapplication;
+package com.example.arttirbiddingapplication.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
+import com.example.arttirbiddingapplication.Models.Profile;
+import com.example.arttirbiddingapplication.R;
+
 import java.util.List;
 
 public class BidderListAdapter extends ArrayAdapter<Profile> {
@@ -40,10 +43,12 @@ public class BidderListAdapter extends ArrayAdapter<Profile> {
         bidPrice.setText("Arttırdığı Fiyat: "+user.getPrice()+" TL");
         userName.setText(user.getName()+ " "+user.getSurname());
 
-     Glide.with(context)
+        Glide.with(context)
                 .asBitmap()
                 .load(user.getPhotoUrl())
                 .into(profilePic);
+
+
 
         return rowView;
     }

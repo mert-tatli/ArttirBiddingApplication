@@ -1,4 +1,4 @@
-package com.example.arttirbiddingapplication;
+package com.example.arttirbiddingapplication.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -28,6 +28,12 @@ import android.widget.Toast;
 
 import com.addisonelliott.segmentedbutton.SegmentedButtonGroup;
 
+import com.example.arttirbiddingapplication.Adapters.RecyclerItemViewAdapter;
+import com.example.arttirbiddingapplication.MainActivity;
+import com.example.arttirbiddingapplication.Models.Auction;
+import com.example.arttirbiddingapplication.Models.Bidder;
+import com.example.arttirbiddingapplication.Models.Product;
+import com.example.arttirbiddingapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,14 +46,11 @@ import com.google.firebase.storage.StorageReference;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -137,7 +140,6 @@ public class SellFragment extends Fragment {
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 startActivityForResult(Intent.createChooser(intent, "Fotoğraf Seçiniz"), REQUEST_CODE_CHOOSE);
 
-
             }
         });
 
@@ -161,11 +163,12 @@ public class SellFragment extends Fragment {
                 if (!TextUtils.isEmpty(startprice.getText())) {
                     if (!TextUtils.isEmpty(increasingRate.getText())) {
                         if (!TextUtils.isEmpty(description.getText())) {
-                            if (isImageChosen==true) {
+                            if (isImageChosen==true && defaultUri.size()>=3 && defaultUri.size()<6) {
 
                                 final ProgressDialog progressDialog = new ProgressDialog(getContext());
-                                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                                 progressDialog.setTitle("Ürün hazırlanıyor...");
+                                progressDialog.setCancelable(false);
                                 progressDialog.show();
 
                                 uploadImages();
@@ -196,6 +199,8 @@ public class SellFragment extends Fragment {
                                                         Toast toast=DynamicToast.makeSuccess(getContext(),"Başarılı!", Toast.LENGTH_SHORT);
                                                         toast.setGravity(Gravity.TOP, 0, 40);
                                                         toast.show();
+                                                        Intent intent=new Intent(getContext(),MainActivity.class);
+                                                        startActivity(intent);
 
                                                     }
                                                 });
@@ -208,7 +213,7 @@ public class SellFragment extends Fragment {
                             }
                             else {
 
-                                Toast toast= DynamicToast.makeError(getContext(),"Lütfen ürün resmi seçiniz !", Toast.LENGTH_SHORT);
+                                Toast toast= DynamicToast.makeError(getContext(),"Lütfen 3 ile 5 adet arasında ürün resmi seçiniz !", Toast.LENGTH_SHORT);
                                 toast.setGravity(Gravity.TOP, 0, 40);
                                 toast.show();
                             }
@@ -241,8 +246,8 @@ public class SellFragment extends Fragment {
     private void getImages() {
 
         Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
-                "://" + getResources().getResourcePackageName(R.drawable.addpicture)
-                + '/' + getResources().getResourceTypeName(R.drawable.addpicture) + '/' + getResources().getResourceEntryName(R.drawable.addpicture));
+                "://" + getResources().getResourcePackageName(R.drawable.addpic)
+                + '/' + getResources().getResourceTypeName(R.drawable.addpic) + '/' + getResources().getResourceEntryName(R.drawable.addpic));
         defaultUri.add(imageUri);
         defaultUri.add(imageUri);
         defaultUri.add(imageUri);

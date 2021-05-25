@@ -1,9 +1,6 @@
-package com.example.arttirbiddingapplication;
-
-import com.google.firebase.database.GenericTypeIndicator;
+package com.example.arttirbiddingapplication.Models;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Auction {
     private String currentprice,startingPrice,increasingRate,daysOfAuction,date;

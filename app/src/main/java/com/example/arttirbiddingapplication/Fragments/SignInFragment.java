@@ -1,7 +1,6 @@
-package com.example.arttirbiddingapplication;
+package com.example.arttirbiddingapplication.Fragments;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +22,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.arttirbiddingapplication.MainActivity;
+import com.example.arttirbiddingapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -164,7 +165,7 @@ public class  SignInFragment extends Fragment {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
                                     progressBar.setVisibility(View.INVISIBLE);
-                                    Intent intent=new Intent(getActivity(),MainActivity.class);
+                                    Intent intent=new Intent(getActivity(), MainActivity.class);
                                     startActivity(intent);
                                     getActivity().finish();
                                 }
