@@ -10,16 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.arttirbiddingapplication.Adapters.RecyclerCategoryItemViewAdapter;
 import com.example.arttirbiddingapplication.Adapters.RecyclerProductViewAdapter;
 import com.example.arttirbiddingapplication.Models.Category;
-import com.example.arttirbiddingapplication.OnCategoryItemListener;
+import com.example.arttirbiddingapplication.Interfaces.OnCategoryItemListener;
 import com.example.arttirbiddingapplication.Models.Product;
 import com.example.arttirbiddingapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,7 +29,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -104,7 +101,7 @@ public class DashboardFragment extends Fragment implements OnCategoryItemListene
                             initProductRecyclerView();
                             progressDialog.dismiss();
                         }
-                    }, 1000);
+                    }, 500);
 
 
                 }
@@ -112,6 +109,7 @@ public class DashboardFragment extends Fragment implements OnCategoryItemListene
         });
         return view;
     }
+
     private void reinitRecyclerView(){
         recyclerProductViewAdapter.notifyDataSetChanged();
         productRecycler.setAdapter(recyclerProductViewAdapter);
@@ -123,7 +121,6 @@ public class DashboardFragment extends Fragment implements OnCategoryItemListene
         recyclerCategoryItemViewAdapter = new RecyclerCategoryItemViewAdapter(getActivity(), categories,this::OnCategoryClick);
         categoryRecycler.setAdapter(recyclerCategoryItemViewAdapter);
     }
-
 
     private void initProductRecyclerView() {
         productRecycler.setLayoutManager(new GridLayoutManager(getActivity(),2));

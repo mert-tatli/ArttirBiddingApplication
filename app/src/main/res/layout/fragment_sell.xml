@@ -277,9 +277,11 @@
                         android:layout_weight="1"
                         android:padding="10dp"
                         app:drawableGravity="top"
-                        app:selectedTextColor="@color/white"
+                        app:selectedTextColor="@color/black"
                         app:text="Bir Gün"
-                        app:textColor="@color/black" />
+                        app:textColor="@color/white"
+                        android:background="@color/colorDarkGray"
+                        app:selectedBackground="@color/colorWhite"/>
 
                     <com.addisonelliott.segmentedbutton.SegmentedButton
                         android:layout_width="0dp"
@@ -287,9 +289,12 @@
                         android:layout_weight="1"
                         android:padding="10dp"
                         app:drawableGravity="top"
-                        app:selectedTextColor="@color/white"
+                        app:selectedTextColor="@color/black"
                         app:text="Üç Gün"
-                        app:textColor="@color/black" />
+                        app:textColor="@color/white"
+                        android:background="@color/colorDarkGray"
+                        app:selectedBackground="@color/colorWhite"
+                        />
 
                     <com.addisonelliott.segmentedbutton.SegmentedButton
                         android:layout_width="0dp"
@@ -297,9 +302,11 @@
                         android:layout_weight="1"
                         android:padding="10dp"
                         app:drawableGravity="top"
-                        app:selectedTextColor="@color/white"
+                        app:selectedTextColor="@color/black"
                         app:text="Beş Gün"
-                        app:textColor="@color/black" />
+                        app:textColor="@color/white"
+                        android:background="@color/colorDarkGray"
+                        app:selectedBackground="@color/colorWhite"/>
                 </com.addisonelliott.segmentedbutton.SegmentedButtonGroup>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

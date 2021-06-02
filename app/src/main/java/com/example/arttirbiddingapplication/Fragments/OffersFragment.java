@@ -10,6 +10,8 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import com.example.arttirbiddingapplication.Adapters.RecyclerBiddingFinishedOffersAdapter;
 import com.example.arttirbiddingapplication.Adapters.RecyclerBiddingOffersAdapter;
 import com.example.arttirbiddingapplication.Models.Product;
@@ -37,6 +39,7 @@ public class OffersFragment extends Fragment {
 
     private ArrayList<Product> biddingItemsShow = new ArrayList<>(); //from products
     private ArrayList<Product> finishedBiddingItemsShow = new ArrayList<>();
+
 
     private FirebaseFirestore firebaseFirestore;
     private FirebaseUser fUser;
@@ -66,7 +69,14 @@ public class OffersFragment extends Fragment {
         progressDialog.show();
 
         getFromProductsOngoing();
-        getFromProductsFinished();
+
+        Handler handler2 = new Handler();
+        handler2.postDelayed(new Runnable() {
+
+            public void run() {
+                getFromProductsFinished();
+            }
+        }, 1000);
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -76,7 +86,8 @@ public class OffersFragment extends Fragment {
                 initFinishedRecyclerView();
                 progressDialog.dismiss();
             }
-        }, 1000);
+        }, 2000);
+
 
 
         return view;

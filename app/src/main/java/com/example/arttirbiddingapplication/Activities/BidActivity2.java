@@ -1,4 +1,4 @@
-package com.example.arttirbiddingapplication;
+package com.example.arttirbiddingapplication.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +26,9 @@ import com.example.arttirbiddingapplication.Adapters.RecyclerItemViewAdapter2;
 import com.example.arttirbiddingapplication.Models.Auction;
 import com.example.arttirbiddingapplication.Models.Bidder;
 import com.example.arttirbiddingapplication.Models.Profile;
+import com.example.arttirbiddingapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,7 +37,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
@@ -45,8 +46,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import maes.tech.intentanim.CustomIntent;
 
@@ -149,7 +148,19 @@ public class BidActivity2 extends AppCompatActivity {
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //send message to seller.
+
+                DocumentReference docRef = firebaseFirestore.collection("USERS").document(fUser.getUid());
+                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Intent intent1=new Intent(BidActivity2.this,ChatActivity.class);
+                        intent1.putExtra("userId",sellerId);
+                        intent1.putExtra("userName",documentSnapshot.getString("name")+" "+documentSnapshot.getString("surname"));
+                        startActivity(intent1);
+                        CustomIntent.customType(BidActivity2.this,"right-to-left");
+                    }
+                });
+
             }
         });
 

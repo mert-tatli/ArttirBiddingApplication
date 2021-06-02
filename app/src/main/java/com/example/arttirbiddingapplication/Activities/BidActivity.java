@@ -1,4 +1,4 @@
-package com.example.arttirbiddingapplication;
+package com.example.arttirbiddingapplication.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +26,9 @@ import com.example.arttirbiddingapplication.Adapters.RecyclerItemViewAdapter2;
 import com.example.arttirbiddingapplication.Models.Auction;
 import com.example.arttirbiddingapplication.Models.Bidder;
 import com.example.arttirbiddingapplication.Models.Profile;
+import com.example.arttirbiddingapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -55,7 +57,7 @@ public class BidActivity extends AppCompatActivity {
     private ArrayList<String> pictures=new ArrayList<>();
     private TextView txtTitle,txtDetails,txtcondition,rateInfo,bidderList,txtTime,txtStartingPrice;
     private EditText price;
-    private Button plus,minus,btnBid;
+    private Button plus,minus,btnBid,contact;
     private Boolean condition;
     private String increasingRate,tempPrice,date,title2,details2,sellerId;
     private String landingPrice="";
@@ -100,6 +102,7 @@ public class BidActivity extends AppCompatActivity {
         btnBid=findViewById(R.id.btnBid);
         txtTime=findViewById(R.id.txtTime);
         txtStartingPrice=findViewById(R.id.startingPriceText);
+        contact=findViewById(R.id.btnMessage);
 
         Intent intent=getIntent();
         String productId=intent.getStringExtra("productId");
@@ -119,6 +122,24 @@ public class BidActivity extends AppCompatActivity {
         initRecyclerView();
         checkCurrentBid(productId);
 
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DocumentReference docRef = firebaseFirestore.collection("USERS").document(fUser.getUid());
+                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Intent intent1=new Intent(BidActivity.this,ChatActivity.class);
+                        intent1.putExtra("userId",sellerId);
+                        intent1.putExtra("userName",documentSnapshot.getString("name")+" "+documentSnapshot.getString("surname"));
+                        startActivity(intent1);
+                        CustomIntent.customType(BidActivity.this,"right-to-left");
+                    }
+                });
+
+            }
+        });
 
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -407,10 +428,9 @@ public class BidActivity extends AppCompatActivity {
 
             public void run() {
                 getBidderList();
-                progressDialog.dismiss();
             }
         }, 1000);
-
+        progressDialog.dismiss();
         rateInfo.setText("Bu ürünü en az "+increasingRate+"TL arttırabilirsiniz!");
         txtTitle.setText(title2);
         txtDetails.setText(details2);

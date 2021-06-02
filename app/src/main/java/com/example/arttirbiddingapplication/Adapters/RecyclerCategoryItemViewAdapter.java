@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.arttirbiddingapplication.Models.Category;
-import com.example.arttirbiddingapplication.OnCategoryItemListener;
+import com.example.arttirbiddingapplication.Interfaces.OnCategoryItemListener;
 import com.example.arttirbiddingapplication.R;
 
 import java.util.ArrayList;

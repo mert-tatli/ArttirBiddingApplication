@@ -12,8 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.arttirbiddingapplication.BidActivity;
-import com.example.arttirbiddingapplication.BidActivity2;
+import com.example.arttirbiddingapplication.Activities.BidActivity2;
 import com.example.arttirbiddingapplication.Models.Product;
 import com.example.arttirbiddingapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +31,6 @@ public class RecyclerBiddingFinishedItemAdapter extends RecyclerView.Adapter<Rec
     public RecyclerBiddingFinishedItemAdapter(Context context,ArrayList<Product> products) {
         this.products=products;
         this.context = context;
-
     }
     @NonNull
     @Override
@@ -46,7 +44,6 @@ public class RecyclerBiddingFinishedItemAdapter extends RecyclerView.Adapter<Rec
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerBiddingFinishedItemAdapter.ViewHolder holder, int position) {
-
 
         Glide.with(context)
                 .asBitmap()

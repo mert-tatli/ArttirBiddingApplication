@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.arttirbiddingapplication.BidActivity;
-import com.example.arttirbiddingapplication.BidActivity2;
+import com.example.arttirbiddingapplication.Activities.BidActivity;
+import com.example.arttirbiddingapplication.Activities.BidActivity2;
 import com.example.arttirbiddingapplication.Models.Product;
 import com.example.arttirbiddingapplication.R;
 import com.google.firebase.auth.FirebaseAuth;

@@ -13,16 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".BidActivity2"></activity>
-        <activity android:name=".BidActivity" />
+        <activity android:name=".Activities.ChatActivity"></activity>
+        <activity android:name=".Activities.BidActivity2" />
+        <activity android:name=".Activities.BidActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".Activities.RegisterActivity" />
+        <activity android:name=".Activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

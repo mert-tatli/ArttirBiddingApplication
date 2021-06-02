@@ -1,14 +1,15 @@
-package com.example.arttirbiddingapplication;
+package com.example.arttirbiddingapplication.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import com.example.arttirbiddingapplication.R;
 
 public class SplashActivity extends AppCompatActivity {
         ImageView image;
@@ -31,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        },500);
+        },1250);
 
 
     }

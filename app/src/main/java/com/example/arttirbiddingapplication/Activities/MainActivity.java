@@ -1,4 +1,4 @@
-package com.example.arttirbiddingapplication;
+package com.example.arttirbiddingapplication.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import com.example.arttirbiddingapplication.Fragments.MyAuctionsFragment;
 import com.example.arttirbiddingapplication.Fragments.MessageFragment;
 import com.example.arttirbiddingapplication.Fragments.ProfileFragment;
 import com.example.arttirbiddingapplication.Fragments.SellFragment;
+import com.example.arttirbiddingapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

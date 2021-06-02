@@ -23,32 +23,32 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.arttirbiddingapplication.Activities.ChatActivity;
+import com.example.arttirbiddingapplication.Models.Profile;
 import com.example.arttirbiddingapplication.R;
-import com.example.arttirbiddingapplication.RegisterActivity;
+import com.example.arttirbiddingapplication.Activities.RegisterActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -123,8 +123,13 @@ public class ProfileFragment extends Fragment {
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(imageView);
 
+                Picasso.get().load(uri).into(imageView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Picasso.get().load(R.drawable.profile_image).into(imageView);
             }
         });
 
@@ -197,6 +202,17 @@ public class ProfileFragment extends Fragment {
                 userInformation.put("surname",surname.getText().toString());
                 userInformation.put("city",from);
                 userInformation.put("photoUrl",photoUrl);
+
+                Map<Object,String> userInformation2=new HashMap<>();
+                userInformation2.put("userId",fAuth.getCurrentUser().getUid());
+                userInformation2.put("name",name.getText().toString());
+                userInformation2.put("surname",surname.getText().toString());
+                userInformation2.put("profileImage",photoUrl);
+
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                ref.child("Users").child(fAuth.getCurrentUser().getUid()).setValue(userInformation2);
+
+
                 firebaseFirestore.collection("USERS").document(fAuth.getCurrentUser().getUid())
                         .set(userInformation, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

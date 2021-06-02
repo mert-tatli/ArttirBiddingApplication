@@ -2,4 +2,12 @@
     <string name="app_name">ArttirBiddingApplication</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_email">Email Giriniz</string>
+    <string name="type_message">Mesaj Giriniz</string>
+    <string name="btn_save">Kaydet</string>
+    <string name="label_message">Mesaj</string>
+    <string name="label_profile">Profil</string>
+    <string name="btn_sign_up">Prasdasdofil</string>
+
 </resources>

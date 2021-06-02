@@ -29,7 +29,7 @@ import android.widget.Toast;
 import com.addisonelliott.segmentedbutton.SegmentedButtonGroup;
 
 import com.example.arttirbiddingapplication.Adapters.RecyclerItemViewAdapter;
-import com.example.arttirbiddingapplication.MainActivity;
+import com.example.arttirbiddingapplication.Activities.MainActivity;
 import com.example.arttirbiddingapplication.Models.Auction;
 import com.example.arttirbiddingapplication.Models.Bidder;
 import com.example.arttirbiddingapplication.Models.Product;

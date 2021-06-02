@@ -22,7 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.arttirbiddingapplication.MainActivity;
+import com.example.arttirbiddingapplication.Activities.MainActivity;
 import com.example.arttirbiddingapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

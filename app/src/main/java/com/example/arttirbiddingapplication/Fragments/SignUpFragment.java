@@ -27,6 +27,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
@@ -261,6 +263,17 @@ public class SignUpFragment extends Fragment {
                                 userInformation.put("name",name.getText().toString());
                                 userInformation.put("surname",surname.getText().toString());
                                 userInformation.put("city","");
+                                userInformation.put("photoUrl","");
+
+                                Map<Object,String> userInformation2=new HashMap<>();
+                                userInformation2.put("userId",fAuth.getCurrentUser().getUid());
+                                userInformation2.put("name",name.getText().toString());
+                                userInformation2.put("surname",surname.getText().toString());
+                                userInformation2.put("profileImage","");
+
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                                ref.child("Users").child(fAuth.getCurrentUser().getUid()).setValue(userInformation2);
+
                                 firebaseFirestore.collection("USERS").document(fAuth.getCurrentUser().getUid())
                                         .set(userInformation, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override

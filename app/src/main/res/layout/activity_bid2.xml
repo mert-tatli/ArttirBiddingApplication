@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_gradient"
-    tools:context=".BidActivity2">
+    tools:context=".Activities.BidActivity2">
 
     <Button
         android:id="@+id/btnMessage2"
