@@ -41,15 +41,12 @@ public class BiddingFragment extends Fragment {
     private RecyclerBiddingItemAdapter adapter;
     private RecyclerBiddingFinishedItemAdapter finishedItemAdapter;
 
-
     private ArrayList<Product> biddingItemsShow = new ArrayList<>(); //from products
     private ArrayList<Product> finishedBiddingItemsShow = new ArrayList<>();
 
-
     private ArrayList<String> biddingItems = new ArrayList<>();  //from auctions
     private ArrayList<String> finishedBiddingItems = new ArrayList<>();
-
-
+    private ArrayList<Integer> winnerList=new ArrayList<>();
 
     private FirebaseFirestore firebaseFirestore;
     private FirebaseUser fUser;
@@ -57,7 +54,6 @@ public class BiddingFragment extends Fragment {
     StorageReference storageReference;
 
     private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -115,7 +111,7 @@ public class BiddingFragment extends Fragment {
     private void initFinishedRecyclerView() {
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewFinished.setLayoutManager(layoutManager2);
-        finishedItemAdapter = new RecyclerBiddingFinishedItemAdapter(getActivity(), finishedBiddingItemsShow);
+        finishedItemAdapter = new RecyclerBiddingFinishedItemAdapter(getActivity(), finishedBiddingItemsShow,winnerList);
         recyclerViewFinished.setAdapter(finishedItemAdapter);
     }
 
@@ -130,12 +126,26 @@ public class BiddingFragment extends Fragment {
                         Auction a = document.toObject(Auction.class);
                         if(checkDates(a.getDate()))
                         {
-                            for (Bidder b : a.getBidders()) {
-                                if (b.getBidderId().equals(fUser.getUid())) {
-                                    finishedBiddingItems.add(document.getId());
-                                    break;
+                            if (!a.getBidders().isEmpty())
+                            {
+                                for (Bidder b : a.getBidders()) {
+                                    if (b.getBidderId().equals(fUser.getUid())) {
+                                        if (a.getBidders().get(a.getBidders().size()-1).getBidderId().equals(fUser.getUid()))
+                                        {
+                                            winnerList.add(1);
+                                            finishedBiddingItems.add(document.getId());
+                                            break;
+                                        }
+                                        else {
+                                            winnerList.add(0);
+                                            finishedBiddingItems.add(document.getId());
+                                            break;
+                                        }
+
+                                    }
                                 }
                             }
+
 
                         }
                         else{

@@ -38,10 +38,12 @@ import java.util.ArrayList;
 
 
 public class MessageFragment extends Fragment {
-    RecyclerView recyclerView;
-    RecyclerLastChatAdapter recyclerLastChatAdapter;
-    ArrayList<User> users=new ArrayList<>();
-    ArrayList<String> chattedUser=new ArrayList<>();
+    private RecyclerView recyclerView;
+    private RecyclerLastChatAdapter recyclerLastChatAdapter;
+    private ArrayList<User> users=new ArrayList<>();
+    private ArrayList<String> chattedUser=new ArrayList<>();
+    private String sender,reciever;
+
 
     private FirebaseAuth fAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -104,15 +106,19 @@ public class MessageFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
+
                     Chat chat = ds.getValue(Chat.class);
 
                     if (fUser.getUid().equals(chat.getSenderId()) && !chattedUser.contains(chat.getReceiverId()) )
                     {
                         chattedUser.add(chat.getReceiverId());
+                        reciever=chat.getReceiverId();
+
                     }
                     if (fUser.getUid().equals(chat.getReceiverId()) && !chattedUser.contains(chat.getSenderId()))
                     {
                         chattedUser.add(chat.getSenderId());
+                        sender=chat.getSenderId();
                     }
                 }
             }
@@ -138,6 +144,8 @@ public class MessageFragment extends Fragment {
         }
 
     }
+
+
 
 
 }

@@ -39,7 +39,7 @@ import java.util.Map;
 public class SignUpFragment extends Fragment {
 
     public SignUpFragment() {
-        // Required empty public constructor
+
     }
     private TextView alreadyHaveAccount;
     private FrameLayout parentFramelayout;
@@ -76,9 +76,7 @@ public class SignUpFragment extends Fragment {
 
         fAuth=FirebaseAuth.getInstance();
         firebaseFirestore=FirebaseFirestore.getInstance();
-
-
-         return view;
+        return view;
     }
 
     @Override
@@ -264,6 +262,7 @@ public class SignUpFragment extends Fragment {
                                 userInformation.put("surname",surname.getText().toString());
                                 userInformation.put("city","");
                                 userInformation.put("photoUrl","");
+                                userInformation.put("email",email.getText().toString());
 
                                 Map<Object,String> userInformation2=new HashMap<>();
                                 userInformation2.put("userId",fAuth.getCurrentUser().getUid());

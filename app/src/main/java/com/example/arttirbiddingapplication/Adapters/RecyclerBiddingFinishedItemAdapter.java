@@ -25,10 +25,12 @@ import maes.tech.intentanim.CustomIntent;
 public class RecyclerBiddingFinishedItemAdapter extends RecyclerView.Adapter<RecyclerBiddingFinishedItemAdapter.ViewHolder> {
 
     private ArrayList<Product> products;
+    private ArrayList<Integer> winners;
     private Context context;
     private FirebaseAuth fAuth;
     private FirebaseUser fUser;
-    public RecyclerBiddingFinishedItemAdapter(Context context,ArrayList<Product> products) {
+    public RecyclerBiddingFinishedItemAdapter(Context context,ArrayList<Product> products,ArrayList<Integer> winners) {
+        this.winners=winners;
         this.products=products;
         this.context = context;
     }
@@ -36,10 +38,19 @@ public class RecyclerBiddingFinishedItemAdapter extends RecyclerView.Adapter<Rec
     @Override
     public RecyclerBiddingFinishedItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_myauctions,parent,false);
-        fAuth = FirebaseAuth.getInstance();
-        fUser = FirebaseAuth.getInstance().getCurrentUser();
-        return new RecyclerBiddingFinishedItemAdapter.ViewHolder(view);
+        if (viewType==1)
+        {
+            View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_finishedwinner,parent,false);
+            fAuth = FirebaseAuth.getInstance();
+            fUser = FirebaseAuth.getInstance().getCurrentUser();
+            return new RecyclerBiddingFinishedItemAdapter.ViewHolder(view);
+        }
+        else {
+            View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_myauctions,parent,false);
+            fAuth = FirebaseAuth.getInstance();
+            fUser = FirebaseAuth.getInstance().getCurrentUser();
+            return new RecyclerBiddingFinishedItemAdapter.ViewHolder(view);
+        }
     }
 
     @Override
@@ -65,7 +76,6 @@ public class RecyclerBiddingFinishedItemAdapter extends RecyclerView.Adapter<Rec
                 intent.putExtra("startingPrice",products.get(position).getStartingPrice());
                 intent.putExtra("sellerId",products.get(position).getSellerId());
                 intent.putStringArrayListExtra("photos",products.get(position).getPictures());
-
                 context.startActivity(intent);
                 CustomIntent.customType(context,"bottom-to-up");
 
@@ -73,6 +83,18 @@ public class RecyclerBiddingFinishedItemAdapter extends RecyclerView.Adapter<Rec
         });
 
     }
+    @Override
+    public int getItemViewType(int position)
+    {
+        System.out.println(winners.get(position));
+        if (winners.get(position)==1)
+        {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     @Override
     public int getItemCount() {
         return products.size();

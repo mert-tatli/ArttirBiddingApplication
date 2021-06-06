@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.arttirbiddingapplication.Fragments.BiddingFragment;
 import com.example.arttirbiddingapplication.Fragments.OffersFragment;
+import com.example.arttirbiddingapplication.Fragments.SellFragment;
 
 public class TabLayoutAdapter extends FragmentPagerAdapter {
 

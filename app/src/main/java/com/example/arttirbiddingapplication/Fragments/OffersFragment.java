@@ -43,8 +43,8 @@ public class OffersFragment extends Fragment {
 
     private FirebaseFirestore firebaseFirestore;
     private FirebaseUser fUser;
-    FirebaseStorage storage;
-    StorageReference storageReference;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
 
     private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 

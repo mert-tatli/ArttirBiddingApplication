@@ -97,14 +97,11 @@ public class SellFragment extends Fragment {
         s1 = view.findViewById(R.id.categorySpinner);
         SegmentedButtonGroup segmentedButtonGroup = (SegmentedButtonGroup) view.findViewById(R.id.buttonGroup_lordOfTheRings);
 
-
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         firebaseFirestore= FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
 
         getImages();
-
-
 
         segmentedButtonGroup.setOnPositionChangedListener(new SegmentedButtonGroup.OnPositionChangedListener() {
             @Override
@@ -208,7 +205,7 @@ public class SellFragment extends Fragment {
                                             }
                                         });
                                     }
-                                }, 5000);
+                                }, 5500);
 
                             }
                             else {

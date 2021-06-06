@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import com.example.arttirbiddingapplication.R;
 
 public class SplashActivity extends AppCompatActivity {
-        ImageView image;
+      private ImageView image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

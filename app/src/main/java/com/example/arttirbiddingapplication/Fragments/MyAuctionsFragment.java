@@ -30,6 +30,7 @@ public class MyAuctionsFragment extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText("Arttırdıklarım"));
         tabLayout.addTab(tabLayout.newTab().setText("Ürünlerim"));
 
+
         TabLayoutAdapter adapter=new TabLayoutAdapter(getActivity(),getChildFragmentManager(),tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

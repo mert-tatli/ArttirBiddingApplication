@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.arttirbiddingapplication.Activities.AdminActivity;
 import com.example.arttirbiddingapplication.Activities.MainActivity;
 import com.example.arttirbiddingapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,7 +35,7 @@ import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 public class  SignInFragment extends Fragment {
 
     public SignInFragment() {
-        // Required empty public constructor
+
     }
 
     private TextView dontHaveAnAccount;
@@ -44,7 +45,6 @@ public class  SignInFragment extends Fragment {
 
     private EditText email;
     private EditText password;
-    private String Email,Password;
     private Button singIn;
     private TextView errorMessageLogin;
     private String emailPattern="[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -155,40 +155,50 @@ public class  SignInFragment extends Fragment {
     }
     private void verifyInputs(){
 
-        if (email.getText().toString().matches(emailPattern)){
-            if (password.length()>=6){
-                progressBar.setVisibility(View.VISIBLE);
+        if (email.getText().toString().equals("admin")&& password.getText().toString().equals("admin"))
+        {
+            Intent intent=new Intent(getActivity(), AdminActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
+        else {
+            if (email.getText().toString().matches(emailPattern)){
+                if (password.length()>=6){
+                    progressBar.setVisibility(View.VISIBLE);
 
-                fAuth.signInWithEmailAndPassword(email.getText().toString(),password.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()){
-                                    progressBar.setVisibility(View.INVISIBLE);
-                                    Intent intent=new Intent(getActivity(), MainActivity.class);
-                                    startActivity(intent);
-                                    getActivity().finish();
+                    fAuth.signInWithEmailAndPassword(email.getText().toString(),password.getText().toString())
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()){
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                        Intent intent=new Intent(getActivity(), MainActivity.class);
+                                        startActivity(intent);
+                                        getActivity().finish();
+                                    }
+                                    else{
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                        String error=task.getException().getMessage();
+                                        Toast toast= DynamicToast.makeWarning(getContext(),error, Toast.LENGTH_SHORT);
+                                        toast.setGravity(Gravity.TOP, 0, 40);
+                                        toast.show();
+                                    }
                                 }
-                                else{
-                                    progressBar.setVisibility(View.INVISIBLE);
-                                    String error=task.getException().getMessage();
-                                    Toast toast= DynamicToast.makeWarning(getContext(),error, Toast.LENGTH_SHORT);
-                                    toast.setGravity(Gravity.TOP, 0, 40);
-                                    toast.show();
-                                }
-                            }
-                        });
+                            });
 
+                }
+                else {
+                    errorMessageLogin.setText("");
+                    errorMessageLogin.setText("Password requires 6 or more than 6 characters!");
+                }
             }
             else {
                 errorMessageLogin.setText("");
-                errorMessageLogin.setText("Password requires 6 or more than 6 characters!");
+                errorMessageLogin.setText("Please enter a valid email!");
             }
         }
-        else {
-            errorMessageLogin.setText("");
-            errorMessageLogin.setText("Please enter a valid email!");
-        }
+
+
 
     }
 

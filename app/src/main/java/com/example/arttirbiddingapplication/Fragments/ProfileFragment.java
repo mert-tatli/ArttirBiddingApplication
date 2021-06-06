@@ -107,31 +107,17 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        s1.setAdapter(adapter);
+
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setTitle("Yükleniyor..");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, arraySpinner);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        s1.setAdapter(adapter);
-
-        StorageReference profileRef = storageReference.child(fUser.getUid()+"/profilePicture/profile.jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-
-                Picasso.get().load(uri).into(imageView);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Picasso.get().load(R.drawable.profile_image).into(imageView);
-            }
-        });
 
         DocumentReference docRef = firebaseFirestore.collection("USERS").document(fUser.getUid());
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -150,13 +136,22 @@ public class ProfileFragment extends Fragment {
         });
 
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        StorageReference profileRef = storageReference.child(fUser.getUid()+"/profilePicture/profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
 
-            public void run() {
+                Picasso.get().load(uri).into(imageView);
                 progressDialog.dismiss();
             }
-        }, 2000);
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Picasso.get().load(R.drawable.profile_image).into(imageView);
+                progressDialog.dismiss();
+            }
+        });
+
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,8 +222,6 @@ public class ProfileFragment extends Fragment {
             }
         }, 4000);
 
-
-
     }
     private void chooseImage() {
         Intent intent = new Intent();
@@ -294,11 +287,6 @@ public class ProfileFragment extends Fragment {
             else {
                 name.setError("İsim Kısmını Boş Bırakmayın!");
             }
-
-
     }
-
-
-
 
 }

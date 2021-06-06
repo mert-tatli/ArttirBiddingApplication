@@ -62,7 +62,7 @@ public class BidActivity2 extends AppCompatActivity {
     private ArrayList<Profile> bidInfo=new ArrayList<>();
     private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    private TextView tv_days, tv_hour, tv_minute, tv_second;
+
     private Handler handler = new Handler();
     private Runnable runnable;
 
@@ -72,8 +72,8 @@ public class BidActivity2 extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth fAuth;
     private FirebaseUser fUser;
-    FirebaseStorage storage;
-    StorageReference storageReference;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +149,7 @@ public class BidActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                DocumentReference docRef = firebaseFirestore.collection("USERS").document(fUser.getUid());
+                DocumentReference docRef = firebaseFirestore.collection("USERS").document(sellerId);
                 docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {

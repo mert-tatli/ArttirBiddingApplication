@@ -75,8 +75,6 @@ public class RecyclerBiddingFinishedOffersAdapter extends RecyclerView.Adapter<R
             }
         });
 
-
-
     }
     @Override
     public int getItemCount() {

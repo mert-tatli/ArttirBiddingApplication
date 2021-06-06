@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.example.arttirbiddingapplication"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -60,4 +60,7 @@ dependencies {
 
     implementation 'com.github.hajiyevelnur92:intentanimation:1.0'
     implementation 'com.google.firebase:firebase-database:20.0.0'
+
+    implementation 'com.sun.mail:android-mail:1.6.0'
+    implementation 'com.sun.mail:android-activation:1.6.0'
 }

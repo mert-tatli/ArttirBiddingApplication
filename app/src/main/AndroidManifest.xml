@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Activities.ChatActivity"></activity>
+        <activity android:name=".Activities.BidActivity3"></activity>
+        <activity android:name=".Activities.AdminActivity" />
+        <activity android:name=".Activities.ChatActivity" />
         <activity android:name=".Activities.BidActivity2" />
         <activity android:name=".Activities.BidActivity" />
         <activity
@@ -23,6 +25,7 @@
         <activity android:name=".Activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
