@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ public class  SignInFragment extends Fragment {
     private Button singIn;
     private TextView errorMessageLogin;
     private String emailPattern="[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private ImageView gotoHome;
 
 
     private FirebaseAuth fAuth;
@@ -67,10 +69,18 @@ public class  SignInFragment extends Fragment {
         singIn=view.findViewById(R.id.btn_SignIn);
         errorMessageLogin=view.findViewById(R.id.errorMessageLogin);
         progressBar=view.findViewById(R.id.signInProgressBar);
+        gotoHome=view.findViewById(R.id.gotohome);
 
         fAuth=FirebaseAuth.getInstance();
 
-
+        gotoHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
         return view;
 
     }
@@ -145,10 +155,10 @@ public class  SignInFragment extends Fragment {
 
 
             } else {
-                password.setError("Enter a password with more than 6 characters");
+                password.setError("Şifrenizin 6 karakter veya daha fazla olması gerekmektedir.");
             }
         } else {
-            email.setError("Enter your Email");
+            email.setError("Email giriniz");
         }
 
 
@@ -189,12 +199,12 @@ public class  SignInFragment extends Fragment {
                 }
                 else {
                     errorMessageLogin.setText("");
-                    errorMessageLogin.setText("Password requires 6 or more than 6 characters!");
+                    errorMessageLogin.setText("Şifrenizin 6 karakter veya daha fazla olması gerekmektedir!");
                 }
             }
             else {
                 errorMessageLogin.setText("");
-                errorMessageLogin.setText("Please enter a valid email!");
+                errorMessageLogin.setText("Lütfen emailinizi veya şifrenizi doğru girdiğinizden emin olun!");
             }
         }
 

@@ -124,18 +124,28 @@ public class BidActivity extends AppCompatActivity {
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (fUser!=null)
+                {
+                    DocumentReference docRef = firebaseFirestore.collection("USERS").document(sellerId);
+                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            Intent intent1=new Intent(BidActivity.this,ChatActivity.class);
+                            intent1.putExtra("userId",sellerId);
+                            intent1.putExtra("userName",documentSnapshot.getString("name")+" "+documentSnapshot.getString("surname"));
+                            startActivity(intent1);
+                            CustomIntent.customType(BidActivity.this,"right-to-left");
+                        }
+                    });
+                }
+                else {
+                    Toast toast=DynamicToast.makeError(BidActivity.this,"Arttırabilmek için giriş yapmanız gerekmektedir.", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.TOP, 0, 40);
+                    toast.show();
 
-                DocumentReference docRef = firebaseFirestore.collection("USERS").document(sellerId);
-                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Intent intent1=new Intent(BidActivity.this,ChatActivity.class);
-                        intent1.putExtra("userId",sellerId);
-                        intent1.putExtra("userName",documentSnapshot.getString("name")+" "+documentSnapshot.getString("surname"));
-                        startActivity(intent1);
-                        CustomIntent.customType(BidActivity.this,"right-to-left");
-                    }
-                });
+                }
+
+
             }
         });
 
@@ -199,6 +209,8 @@ public class BidActivity extends AppCompatActivity {
                     {
                         if (!price.getText().toString().equals(tempPrice)) {
 
+                            btnBid.setEnabled(false);
+                            btnBid.setClickable(false);
                             bidders.add(new Bidder(fUser.getUid(),price.getText().toString()));
                             Map<Object,ArrayList<Bidder>> userInformation=new HashMap<>();
                             userInformation.put("bidders",bidders);
@@ -214,6 +226,10 @@ public class BidActivity extends AppCompatActivity {
                                             .set(currentPrice, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
+                                            reinitialize(productId);
+
+
+
                                         }
                                     });
 
@@ -371,7 +387,7 @@ public class BidActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    handler.postDelayed(this, 1000);
+                    handler.postDelayed(this, 350);
 
                     DocumentReference docRef = firebaseFirestore.collection("Auctions").document(productId);
                     docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -406,6 +422,45 @@ public class BidActivity extends AppCompatActivity {
         };
         handler.postDelayed(runnable, 0);
     }
+    public void reinitialize(String productId)
+    {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Yükleniyor...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        getasd(productId);
+        countDownStart();
+
+        rateInfo.setText("Bu ürünü en az "+increasingRate+"TL arttırabilirsiniz!");
+        txtTitle.setText(title2);
+        txtDetails.setText(details2);
+        if (condition){
+            txtcondition.setText("Yeni");
+        }
+        else{
+            txtcondition.setText("İkinci el");
+        }
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+
+            public void run() {
+
+                getBidderList();
+
+                if (!bidders.get(bidders.size()-1).getBidderId().equals(fUser.getUid()))
+                {
+                    Toast toast=DynamicToast.makeWarning(BidActivity.this,"Maalesef Ürünün fiyatını arttıramadınız!", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 40);
+                    toast.show();
+                }
+                progressDialog.dismiss();
+                btnBid.setEnabled(true);
+                btnBid.setClickable(true);
+            }
+        }, 1000);
+    }
 
     public void initialize(String productId)
     {
@@ -437,7 +492,5 @@ public class BidActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         }, 1000);
-
-
     }
 }

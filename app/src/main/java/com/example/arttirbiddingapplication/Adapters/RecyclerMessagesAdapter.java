@@ -36,7 +36,7 @@ public class RecyclerMessagesAdapter extends RecyclerView.Adapter<RecyclerMessag
     private Context context;
     private int MESSAGE_TYPE_LEFT = 0;
     private int MESSAGE_TYPE_RIGHT = 1;
-    private String senderPhoto=""
+    private static String senderPhoto=""
             , receiverPhoto="";
 
     public RecyclerMessagesAdapter(Context context, ArrayList<Chat> chatList, String senderPhoto, String receiverPhoto) {
@@ -68,7 +68,7 @@ public class RecyclerMessagesAdapter extends RecyclerView.Adapter<RecyclerMessag
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (chatList.get(position).getSenderId().equals(firebaseUser.getUid())) {
-            if (receiverPhoto.isEmpty())
+            if (receiverPhoto.equals(""))
             {
                 Glide.with(context)
                         .asBitmap()
@@ -83,7 +83,7 @@ public class RecyclerMessagesAdapter extends RecyclerView.Adapter<RecyclerMessag
                         .into(holder.itemImage);
             }
         } else {
-            if (senderPhoto.isEmpty())
+            if (senderPhoto.equals(""))
             {
                 Glide.with(context)
                     .asBitmap()

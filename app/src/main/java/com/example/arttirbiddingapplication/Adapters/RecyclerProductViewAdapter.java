@@ -66,13 +66,22 @@ public class RecyclerProductViewAdapter extends RecyclerView.Adapter<RecyclerPro
             @Override
             public void onClick(View v) {
                 Intent intent;
-                if (products.get(position).getSellerId().equals(fUser.getUid()) || holder.checkDates(products.get(position).getEndDate()))
+                if (fAuth.getCurrentUser()==null)
                 {
-                    intent=new Intent(context, BidActivity2.class);
-                }
-                else{
                     intent=new Intent(context, BidActivity.class);
                 }
+
+                else{
+                     if (products.get(position).getSellerId().equals(fUser.getUid()) || holder.checkDates(products.get(position).getEndDate())) {
+                        intent=new Intent(context, BidActivity2.class);
+                    }
+                     else {
+                         intent=new Intent(context, BidActivity.class);
+                     }
+
+                }
+
+
                 intent.putExtra("productId",products.get(position).getProductId());
                 intent.putExtra("title",products.get(position).getTitle());
                 intent.putExtra("details",products.get(position).getDetails());

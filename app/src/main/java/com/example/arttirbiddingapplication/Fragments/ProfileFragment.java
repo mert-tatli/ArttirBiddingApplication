@@ -166,6 +166,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
 
                 fAuth.getInstance().signOut();
+                fAuth=null;
                 Intent register = new Intent(getActivity(), RegisterActivity.class);
                 startActivity(register);
                 getActivity().finish();
@@ -220,7 +221,7 @@ public class ProfileFragment extends Fragment {
                     }
                 });
             }
-        }, 4000);
+        }, 6000);
 
     }
     private void chooseImage() {

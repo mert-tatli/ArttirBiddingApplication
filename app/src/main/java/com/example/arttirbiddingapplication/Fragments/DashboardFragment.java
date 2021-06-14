@@ -62,8 +62,6 @@ public class DashboardFragment extends Fragment implements OnCategoryItemListene
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-
-
         categoryRecycler = view.findViewById(R.id.categoryRecyclerView);
         productRecycler = view.findViewById(R.id.productRecyclerView);
 

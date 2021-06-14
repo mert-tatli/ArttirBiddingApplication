@@ -203,27 +203,27 @@ public class SignUpFragment extends Fragment {
                                     signup.setEnabled(true);
                             }
                             else{
-                                errorMessage.setText("Two passwords are not the same");
+                                errorMessage.setText("İki şifre birbiri ile aynı değil");
                                 errorMessage.setTextColor(Color.RED);
                                 signup.setEnabled(false);
                             }
 
                         }
                         else {
-                            errorMessage.setText("Enter a verification password with more than 6 characters");
+                            errorMessage.setText("Şifrenizin 6 karakter veya daha fazla olması gerekmektedir.");
                             errorMessage.setTextColor(Color.RED);
                             signup.setEnabled(false);
                         }
 
                     }
                     else {
-                        errorMessage.setText("Enter a password with more than 6 characters");
+                        errorMessage.setText("Şifrenizin 6 karakter veya daha fazla olması gerekmektedir.");
                         errorMessage.setTextColor(Color.RED);
                         signup.setEnabled(false);
                     }
                 }
                 else {
-                    errorMessage.setText("Enter your surname");
+                    errorMessage.setText("Soyisim giriniz");
                     errorMessage.setTextColor(Color.RED);
                     signup.setEnabled(false);
                 }
@@ -231,13 +231,13 @@ public class SignUpFragment extends Fragment {
 
             }
             else {
-                errorMessage.setText("Enter your name");
+                errorMessage.setText("İsim giriniz");
                 errorMessage.setTextColor(Color.RED);
                 signup.setEnabled(false);
             }
         }
         else {
-            errorMessage.setText("Enter your email");
+            errorMessage.setText("Email giriniz");
             errorMessage.setTextColor(Color.RED);
             signup.setEnabled(false);
         }
@@ -301,7 +301,7 @@ public class SignUpFragment extends Fragment {
         else {
 
             progressBar.setVisibility(View.INVISIBLE);
-             email.setError("Invalid Email!");
+             email.setError("Hatalı email!");
         }
     }
 

@@ -42,17 +42,10 @@ public class MainActivity extends AppCompatActivity {
             bottomNavigationView.setSelectedItemId(R.id.bottom_nav_notification);
         }
         else{
-            if (fUser != null) {
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DashboardFragment()).commit();
-            } else {
-                Intent register = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(register);
-                finish();
-            }
+
         }
-
-
-
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
     }
 
@@ -62,14 +55,9 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment = null;
             switch (item.getItemId()) {
                 case R.id.bottom_nav_dashboard:
-                    if (fUser != null) {
+
                         fragment = new DashboardFragment();
-                    } else {
-                        Intent register = new Intent(MainActivity.this, RegisterActivity.class);
-                        startActivity(register);
-                        finish();
-                        return false;
-                    }
+
 
                     break;
                 case R.id.bottom_nav_sell:

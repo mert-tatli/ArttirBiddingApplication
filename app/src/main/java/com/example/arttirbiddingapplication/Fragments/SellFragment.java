@@ -65,7 +65,7 @@ public class SellFragment extends Fragment {
     private ArrayList<Uri> defaultUri = new ArrayList<>();
     private RecyclerView recyclerView;
 
-    private String[] arraySpinner = new String[]{"Kategori Seçiniz", "Elektronik","Araba","Motor","Diğer"};
+    private String[] arraySpinner = new String[]{"Kategori Seçiniz", "Elektronik","Araba","Spor","Motor","Diğer"};
     private Spinner s1;
     private String category = "";
     private ImageView addImage;
@@ -198,6 +198,7 @@ public class SellFragment extends Fragment {
                                                         toast.show();
                                                         Intent intent=new Intent(getContext(),MainActivity.class);
                                                         startActivity(intent);
+                                                        getActivity().finish();
 
                                                     }
                                                 });

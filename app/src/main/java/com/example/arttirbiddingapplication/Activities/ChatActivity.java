@@ -95,16 +95,23 @@ public class ChatActivity extends AppCompatActivity {
 
         getReceiverPhoto(fUser.getUid());
         getSenderPhoto(userId);
+        Handler handler1 = new Handler();
+        handler1.postDelayed(new Runnable() {
+            public void run() {
+                readMessage(fUser.getUid(), userId);
+                progressDialog.dismiss();
+
+            }
+        }, 1000);
 
         Handler handler2 = new Handler();
         handler2.postDelayed(new Runnable() {
             public void run() {
-                readMessage(fUser.getUid(), userId);
-                progressDialog.dismiss();
+                checkMessages(userId);
             }
-        }, 1000);
+        }, 2000);
 
-        checkMessages(userId);
+
 
         btnSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,7 +233,7 @@ public class ChatActivity extends AppCompatActivity {
                 User user = dataSnapshot.getValue(User.class);
                 senderPhoto = user.getProfileImage();
 
-                if (senderPhoto.isEmpty()) {
+                if (senderPhoto==null) {
                     imgProfile.setImageResource(R.drawable.profile_image);
                 } else {
                     Glide.with(ChatActivity.this).load(senderPhoto).into(imgProfile);

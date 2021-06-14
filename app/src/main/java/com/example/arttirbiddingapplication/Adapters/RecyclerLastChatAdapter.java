@@ -49,7 +49,7 @@ public class RecyclerLastChatAdapter extends RecyclerView.Adapter<RecyclerLastCh
     public void onBindViewHolder(@NonNull RecyclerLastChatAdapter.ViewHolder holder, int position) {
 
 
-      if (users.get(position).getProfileImage().equals(""))
+      if (users.get(position).getProfileImage().isEmpty())
       {
           Glide.with(context)
                   .asBitmap()
