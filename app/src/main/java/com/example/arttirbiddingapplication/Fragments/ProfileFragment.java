@@ -66,7 +66,7 @@ public class ProfileFragment extends Fragment {
     private Spinner s1;
     private ImageView logOut;
     private EditText name,surname;
-    private String photoUrl;
+    private String photoUrl="";
 
 
     private FirebaseFirestore firebaseFirestore;
@@ -135,23 +135,24 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
-        StorageReference profileRef = storageReference.child(fUser.getUid()+"/profilePicture/profile.jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        DocumentReference docRef2 = firebaseFirestore.collection("USERS").document(fUser.getUid());
+        docRef2.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(Uri uri) {
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                Picasso.get().load(uri).into(imageView);
-                progressDialog.dismiss();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Picasso.get().load(R.drawable.profile_image).into(imageView);
-                progressDialog.dismiss();
+              String uri= documentSnapshot.getString("photoUrl");
+                if(!uri.equals(""))
+                {
+                    Picasso.get().load(uri).into(imageView);
+                    progressDialog.dismiss();
+                }
+                else {
+                    Picasso.get().load(R.drawable.profile_image).into(imageView);
+                    progressDialog.dismiss();
+                }
+
             }
         });
-
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,33 +194,43 @@ public class ProfileFragment extends Fragment {
         handler.postDelayed(new Runnable() {
 
             public void run() {
-                Map<Object,String> userInformation=new HashMap<>();
-                userInformation.put("name",name.getText().toString());
-                userInformation.put("surname",surname.getText().toString());
-                userInformation.put("city",from);
-                userInformation.put("photoUrl",photoUrl);
 
-                Map<Object,String> userInformation2=new HashMap<>();
-                userInformation2.put("userId",fAuth.getCurrentUser().getUid());
-                userInformation2.put("name",name.getText().toString());
-                userInformation2.put("surname",surname.getText().toString());
-                userInformation2.put("profileImage",photoUrl);
+                if (!photoUrl.equals(""))
+                {
+                    Map<Object,String> userInformation=new HashMap<>();
+                    userInformation.put("name",name.getText().toString());
+                    userInformation.put("surname",surname.getText().toString());
+                    userInformation.put("city",from);
+                    userInformation.put("photoUrl",photoUrl);
 
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                ref.child("Users").child(fAuth.getCurrentUser().getUid()).setValue(userInformation2);
+                    Map<Object,String> userInformation2=new HashMap<>();
+                    userInformation2.put("userId",fAuth.getCurrentUser().getUid());
+                    userInformation2.put("name",name.getText().toString());
+                    userInformation2.put("surname",surname.getText().toString());
+                    userInformation2.put("profileImage",photoUrl);
+
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                    ref.child("Users").child(fAuth.getCurrentUser().getUid()).setValue(userInformation2);
 
 
-                firebaseFirestore.collection("USERS").document(fAuth.getCurrentUser().getUid())
-                        .set(userInformation, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        progressDialog.dismiss();
-                        Toast toast=DynamicToast.makeSuccess(getContext(),"Başarılı!", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.TOP, 0, 40);
-                        toast.show();
+                    firebaseFirestore.collection("USERS").document(fAuth.getCurrentUser().getUid())
+                            .set(userInformation, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            progressDialog.dismiss();
+                            Toast toast=DynamicToast.makeSuccess(getContext(),"Başarılı!", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.TOP, 0, 40);
+                            toast.show();
 
-                    }
-                });
+                        }
+                    });
+                }
+                else {
+                    Toast toast=DynamicToast.makeError(getContext(),"Resimleri yüklerken bir sorun oluştu. Lütfen tekrar deneyiniz!", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.TOP, 0, 40);
+                    toast.show();
+                    progressDialog.dismiss();
+                }
             }
         }, 6000);
 

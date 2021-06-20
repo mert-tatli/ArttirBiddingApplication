@@ -169,42 +169,50 @@ public class SellFragment extends Fragment {
                                 progressDialog.show();
 
                                 uploadImages();
-                                Date currentdate = new Date();
-                                String endDate=addDate(currentdate,daysOfAuction);
-
-                                Product newproduct=new Product(productId,category,title.getText().toString(),startprice.getText().toString(),notusedCheck.isChecked(),description.getText().toString(),mImageUrls,fUser.getUid(),endDate);
 
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
                                     public void run() {
+                                        if (!mImageUrls.contains(null))
+                                        {
+                                            Date currentdate = new Date();
+                                            String endDate=addDate(currentdate,daysOfAuction);
+                                            Product newproduct=new Product(productId,category,title.getText().toString(),startprice.getText().toString(),notusedCheck.isChecked(),description.getText().toString(),mImageUrls,fUser.getUid(),endDate);
 
-                                        firebaseFirestore.collection("PRODUCTS").document(productId)
-                                                .set(newproduct, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
+                                            firebaseFirestore.collection("PRODUCTS").document(productId)
+                                                    .set(newproduct, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
 
-                                                ArrayList<Bidder> bidders=new ArrayList<>();
-                                                Auction auction=new Auction("",startprice.getText().toString(),increasingRate.getText().toString(),String.valueOf(daysOfAuction),endDate,bidders);
+                                                    ArrayList<Bidder> bidders=new ArrayList<>();
+                                                    Auction auction=new Auction("",startprice.getText().toString(),increasingRate.getText().toString(),String.valueOf(daysOfAuction),endDate,bidders);
 
 
-                                                firebaseFirestore.collection("Auctions").document(productId)
-                                                        .set(auction, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                    firebaseFirestore.collection("Auctions").document(productId)
+                                                            .set(auction, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
 
-                                                        progressDialog.dismiss();
-                                                        Toast toast=DynamicToast.makeSuccess(getContext(),"Başarılı!", Toast.LENGTH_SHORT);
-                                                        toast.setGravity(Gravity.TOP, 0, 40);
-                                                        toast.show();
-                                                        Intent intent=new Intent(getContext(),MainActivity.class);
-                                                        startActivity(intent);
-                                                        getActivity().finish();
+                                                            progressDialog.dismiss();
+                                                            Toast toast=DynamicToast.makeSuccess(getContext(),"Başarılı!", Toast.LENGTH_SHORT);
+                                                            toast.setGravity(Gravity.TOP, 0, 40);
+                                                            toast.show();
+                                                            Intent intent=new Intent(getContext(),MainActivity.class);
+                                                            startActivity(intent);
+                                                            getActivity().finish();
 
-                                                    }
-                                                });
+                                                        }
+                                                    });
 
-                                            }
-                                        });
+                                                }
+                                            });
+                                        }
+                                        else{
+                                            Toast toast=DynamicToast.makeError(getContext(),"Resimleri yüklerken bir sorun oluştu. Lütfen tekrar deneyiniz!", Toast.LENGTH_SHORT);
+                                            toast.setGravity(Gravity.TOP, 0, 40);
+                                            toast.show();
+                                        }
+
                                     }
                                 }, 5500);
 
@@ -306,11 +314,13 @@ public class SellFragment extends Fragment {
                     storageReference.getDownloadUrl().addOnCompleteListener(task -> {
                         String url = Objects.requireNonNull(task.getResult()).toString();
                         mImageUrls.add(url);
+
                     }))
                     .addOnFailureListener(e -> {
 
                     });
         }
+
     }
 
     public String addDate(Date date,int amount){
